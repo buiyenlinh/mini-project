@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.k-notification {
+  display: flex !important;
+}
+
+.k-grid td.k-selected,
+.k-grid .k-table-row.k-selected > td,
+.k-grid .k-table-td.k-selected,
+.k-grid .k-table-row.k-selected > .k-table-td {
+  background-color: transparent !important;
+}
+
+.k-window-actions {
+  margin: 0 !important;
+}
+
+.k-dialog-titlebar,
+.k-window-content.k-dialog-content {
+  background: #fff !important;
+}
