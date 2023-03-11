@@ -12,7 +12,7 @@ const FieldRadioGroup = (fieldRenderProps: FieldRenderProps) => {
         editorValid={valid}
         editorDisabled={disabled}
       >
-        {label}
+        <span className="font-bold">{label}</span>
       </Label>
       <RadioGroup {...others} />
     </FieldWrapper>

@@ -1,13 +1,13 @@
 import { Field } from "@progress/kendo-react-form";
+import { genders } from "../../const";
+import { InputDatePicker } from "../input/input-date-picker";
 import InputError from "../input/input-error";
 import FieldRadioGroup from "../radio";
-import { genders } from "../../const";
 import { birthdayValidator, fullNameValidator } from "./validate";
-import { InputDatePicker } from "../input/input-date-picker";
 
-const Information = () => {
+export const CreateOrUpdateForm = () => {
   return (
-    <div>
+    <div className="w-[50vw]">
       <div className="mb-3">
         <Field
           name="fullName"
@@ -38,5 +38,3 @@ const Information = () => {
     </div>
   );
 };
-
-export default Information;

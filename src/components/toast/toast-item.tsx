@@ -29,9 +29,10 @@ const ToastItem = ({ id, content, type }: ToastItemProps) => {
         type={{ style: type, icon: true }}
         closable={true}
         onClose={() => onDeleteToast(id)}
+        className="px-3.5 py-2.5"
       >
-        <div className="py-1 px-6">
-          <span className="text-base">{content}</span>
+        <div>
+          <span className="text-base font-medium">{content}</span>
         </div>
       </Notification>
     </Fade>

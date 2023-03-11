@@ -1,23 +1,18 @@
-import { Button } from "@progress/kendo-react-buttons";
-import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
+import { Dialog } from "@progress/kendo-react-dialogs";
+import { PropsWithChildren } from "react";
 
-interface DeleteConfirmProps {
+interface CreateOrUpdateProps {
   visible: boolean;
-  content?: string;
   setVisible: (value: boolean) => void;
   onConfirm: () => void;
 }
 
-const DeleteConfirm = ({
+export const CreateOrUpdate = ({
   visible,
-  content,
   setVisible,
   onConfirm,
-}: DeleteConfirmProps) => {
-  const handleClose = () => {
-    setVisible(false);
-  };
-
+  children,
+}: PropsWithChildren<CreateOrUpdateProps>) => {
   const TitleBar = () => {
     return (
       <div
@@ -28,17 +23,21 @@ const DeleteConfirm = ({
         }}
       >
         <span className="k-icon k-i-delete k-i-trash text-red-500 text-[20px]" />
-        <span className="pl-2 text-red-500">User delete</span>
+        <span className="pl-2 text-red-500">Create/Update delete</span>
       </div>
     );
+  };
+
+  const handleClose = () => {
+    setVisible(false);
   };
 
   return (
     <div>
       {visible && (
         <Dialog title={<TitleBar />} onClose={handleClose}>
-          <p style={{ margin: "25px", textAlign: "center" }}>{content}</p>
-          <DialogActionsBar>
+          {children}
+          {/* <DialogActionsBar>
             <div className="pr-2 pl-1 py-1">
               <Button themeColor="error" onClick={onConfirm} className="w-full">
                 Yes
@@ -53,11 +52,9 @@ const DeleteConfirm = ({
                 No
               </Button>
             </div>
-          </DialogActionsBar>
+          </DialogActionsBar> */}
         </Dialog>
       )}
     </div>
   );
 };
-
-export default DeleteConfirm;

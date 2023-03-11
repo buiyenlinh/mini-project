@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.css";
-import "@progress/kendo-theme-default/dist/all.css";
+// import "@progress/kendo-theme-default/dist/all.css";
+import "@progress/kendo-theme-bootstrap/dist/all.css";
 import { Provider, rootStore } from "./store";
 
 const root = ReactDOM.createRoot(

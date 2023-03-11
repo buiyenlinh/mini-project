@@ -3,7 +3,7 @@
     {
       "fullName": "Hoa Hong Uc",
       "birthday": "1997-02-10T17:00:00.000Z",
-      "gender": "female",
+      "gender": "Female",
       "email": "hoahonguc@gmail.com",
       "phoneNumber": "0987654321",
       "address": "Can Tho",
@@ -12,7 +12,7 @@
     {
       "fullName": "Bong Huong Duong",
       "birthday": "1998-12-31T17:00:00.000Z",
-      "gender": "female",
+      "gender": "Female",
       "email": "bonghuongduong@gmail.com",
       "phoneNumber": "0987654322",
       "address": "Hau Giang",
@@ -21,7 +21,7 @@
     {
       "fullName": "Cao Hoc Gioi",
       "birthday": "1994-12-31T17:00:00.000Z",
-      "gender": "male",
+      "gender": "Male",
       "email": "caohocgioi@gmail.com",
       "phoneNumber": "0987654323",
       "address": "Ho Chi Minh",
@@ -30,7 +30,7 @@
     {
       "fullName": "Le Thi Xinh Dep",
       "birthday": "2000-11-30T17:00:00.000Z",
-      "gender": "female",
+      "gender": "Female",
       "email": "lethixinhdep@gmail.com",
       "phoneNumber": "0987654324",
       "address": "Can Tho",
@@ -39,61 +39,34 @@
     {
       "fullName": "Le Van A",
       "birthday": "1997-01-31T17:00:00.000Z",
-      "gender": "male",
+      "gender": "Male",
       "email": "levana@gmail.com",
       "phoneNumber": "0987654325",
       "address": "Hau Giang",
       "id": "1abdee413236114ad8ec823d19631269"
     },
     {
-      "fullName": "Yeo Mckenzi",
-      "birthday": "1995-02-28T17:00:00.000Z",
-      "gender": "male",
-      "email": "pellentesque.ultricies@aol.ca",
-      "phoneNumber": "0987654326",
-      "address": "Ap #356-716 Auctor Road",
-      "id": "bf40cbfe80cbfaf1b6604f749f313a19"
-    },
-    {
       "fullName": "Gretchen Montoya",
       "birthday": "2023-02-28T17:00:00.000Z",
-      "gender": "male",
+      "gender": "Male",
       "email": "nullam.lobortis.quam@outlook.ca",
       "phoneNumber": "0987654327",
       "address": "A116A991-385E-39D9-DE83-573729A8D2AD",
       "id": "3805a34bad81637ef61d7ff63354e540"
     },
     {
-      "fullName": "Keane Ortiz",
-      "birthday": "1999-12-31T17:00:00.000Z",
-      "gender": "male",
-      "email": "sed.diam.lorem@google.couk",
-      "phoneNumber": "0987654328",
-      "address": "748-4875 Sed Road",
-      "id": "248c552eec8f9515361984ba36a0af4d"
-    },
-    {
       "fullName": "Arsenio Wallace",
       "birthday": "2023-03-01T17:00:00.000Z",
-      "gender": "female",
+      "gender": "Female",
       "email": "sed@aol.co",
       "phoneNumber": "0987654312",
       "address": "P.O. Box 406, 2627 Cras St",
       "id": "2615b3c95fd6e5ea6a94fce9cd8c1b17"
     },
     {
-      "fullName": "Aristotle Heath",
-      "birthday": "2023-03-03T17:00:00.000Z",
-      "gender": "male",
-      "email": "metus.sit.amet@hotmail.org",
-      "phoneNumber": "09873464737",
-      "address": "Can Tho",
-      "id": "9718fca8dec3e35cbeda06f78818b21b"
-    },
-    {
       "fullName": "23dsaddsd",
       "birthday": "2023-03-01T17:00:00.000Z",
-      "gender": "female",
+      "gender": "Female",
       "email": "linhbuwewewei@gmail.com",
       "phoneNumber": "0929834673",
       "address": "asas",
@@ -101,11 +74,11 @@
     },
     {
       "fullName": "asasas",
-      "birthday": null,
-      "email": "linhqwqwbui@gmail.com",
-      "phoneNumber": "0987276437",
-      "address": "Hau Giang",
-      "id": "c7805f90484a66f003053602b335868e"
+      "birthday": "2023-03-08T17:00:00.000Z",
+      "email": "linhbui@gmail.com",
+      "phoneNumber": "07922232312",
+      "address": "ad",
+      "id": "bfb5a46ceb6522a1bc009478fd16d0f3"
     }
   ]
 }

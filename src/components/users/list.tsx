@@ -1,105 +1,143 @@
-import { Button } from "@progress/kendo-react-buttons";
-import { getter } from "@progress/kendo-react-common";
+import { observer } from "mobx-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteUser, getUsers } from "../../mockapi/user-list";
+import useStore from "../../store";
+import { getter, process } from "@progress/kendo-data-query";
 import {
   getSelectedState,
   Grid,
   GridColumn,
+  GridDataStateChangeEvent,
   GridHeaderSelectionChangeEvent,
-  GridPageChangeEvent,
+  GridNoRecords,
+  GridPagerSettings,
   GridSelectionChangeEvent,
-  GridSortChangeEvent,
 } from "@progress/kendo-react-grid";
-import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { User } from "../../interfaces/user";
-import useStore from "../../store";
 import LoadingPanel from "../loading";
+import { ColumnMenu } from "../column-menu";
+import {
+  userColumns,
+  USER_DATA_ITEM_KEY,
+  USER_SELECTED_FIELD,
+} from "../../const";
+import { User } from "../../interfaces/user";
+import { Button } from "@progress/kendo-react-buttons";
+import { Link } from "react-router-dom";
 import DeleteConfirm from "../modals/delete-confirm";
-import { orderBy, SortDescriptor } from "@progress/kendo-data-query";
+import { CreateOrUpdate as CreateOrUpdateModal } from "../modals/create-or-update";
+import { CreateOrUpdateForm } from "./create-or-update-form";
+import { Form } from "@progress/kendo-react-form";
 
-const DATA_ITEM_KEY: string = "id";
-const SELECTED_FIELD: string = "selected";
-const idGetter = getter(DATA_ITEM_KEY);
-
-interface PageState {
-  skip: number;
+interface DataState {
   take: number;
+  skip: number;
+  sortable: boolean;
+  resizable: boolean;
 }
-const initialPageState: PageState = { skip: 0, take: 5 };
-const initialSort: Array<SortDescriptor> = [{ field: "fullName" }];
 
-export const UserList = () => {
+let initialState = {
+  take: 5,
+  skip: 0,
+  sortable: true,
+  resizable: true,
+  selectedField: USER_SELECTED_FIELD,
+  selectable: {
+    enabled: true,
+    drag: true,
+    cell: false,
+    mode: "multiple",
+  },
+};
+
+const pageable: GridPagerSettings = {
+  buttonCount: 5,
+  info: true,
+  type: "numeric",
+  pageSizes: true,
+  previousNext: true,
+};
+
+const idGetter = getter(USER_DATA_ITEM_KEY);
+
+export const List = observer(() => {
   const { userStore, toastStore } = useStore();
-  const { users, onDelete } = userStore;
+  const { users, onSetUsers, onDelete } = userStore;
   const { onAddToast } = toastStore;
 
-  const [dataState, setDataState] = useState<User[]>([]);
+  const [dataState, setDataState] = useState<DataState>(initialState);
+  const [data, setData] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userIds, setUserIds] = useState<string[]>([]);
+  const [isVisibleConfirmModal, setIsVisibleConfirmModal] = useState(false);
+  const [isShowModalCreateUpdate, setIsShowModalCreateUpdate] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timeOut = setTimeout(() => {
+      getUsers()
+        .then((res) => {
+          onSetUsers(res);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }, 300);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [onSetUsers]);
+
+  useEffect(() => {
+    const newData = users.map((user) => {
+      const newUser = user;
+      if (newUser.birthday) {
+        newUser.birthday = new Date(newUser.birthday);
+      }
+      return user;
+    });
+    setData(newData);
+  }, [users]);
+
+  useEffect(() => {
+    console.log("userIds", userIds);
+  }, [userIds]);
+
+  const onDataStateChange = (e: GridDataStateChangeEvent) => {
+    setDataState((prevState) => ({
+      ...prevState,
+      ...(e.dataState as DataState),
+    }));
+  };
+
   const [selectedState, setSelectedState] = useState<{
     [id: string]: boolean | number[];
   }>({});
-
-  const [userIds, setUserIds] = useState<string[]>([]);
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const [sort, setSort] = useState(initialSort);
-  const [page, setPage] = useState<PageState>(initialPageState);
-
-  const pageChange = (event: GridPageChangeEvent) => {
-    setPage(event.page);
-  };
-
-  const customUsers = (users: User[]) => {
-    return users.map((item) => {
-      let birthday = {};
-      if (item.birthday) {
-        birthday = { birthday: new Date(item.birthday) };
-      }
-
-      return Object.assign({ selected: false }, item, birthday);
-    });
-  };
-
-  useEffect(() => {
-    getUsers().then((result: User[]) => {
-      setDataState(customUsers(result));
-    });
-  }, []);
-
-  useEffect(() => {
-    setDataState(customUsers(users));
-  }, [users]);
-
-  const handleDeleteUser = () => {
-    onDelete(userIds);
-    deleteUser(userIds);
-    const contentToast = userIds.length > 1 ? "Users deleted" : "User deleted";
-    onAddToast({
-      id: new Date(),
-      content: contentToast,
-      type: "success",
-    });
-    setUserIds([]);
-    setIsVisibleModal(false);
-  };
 
   const onSelectionChange = useCallback(
     (event: GridSelectionChangeEvent) => {
       const newSelectedState = getSelectedState({
         event,
         selectedState: selectedState,
-        dataItemKey: DATA_ITEM_KEY,
+        dataItemKey: USER_DATA_ITEM_KEY,
       });
 
-      const userSelected = event.dataItem;
-
-      if (userSelected.selected) {
-        setUserIds((prevState) =>
-          prevState.filter((item) => item !== userSelected.id)
-        );
-      } else {
-        setUserIds((prevState) => [...prevState, userSelected.id]);
+      const ids = [];
+      for (const key in newSelectedState) {
+        if (newSelectedState[key]) {
+          ids.push(key);
+        } else {
+          setUserIds((prevState) => prevState.filter((item) => item !== key));
+        }
       }
 
+      if (ids.length > 0) {
+        setUserIds(ids);
+      }
       setSelectedState(newSelectedState);
     },
     [selectedState]
@@ -112,13 +150,13 @@ export const UserList = () => {
       let newSelectedState = {};
       const userIDs: string[] = [];
 
-      event.dataItems.forEach((item: any) => {
+      event.dataItems.forEach((item) => {
         const id = idGetter(item);
         if (checked) {
           userIDs.push(id);
         }
         newSelectedState = Object.assign(newSelectedState, {
-          [id]: checked,
+          [idGetter(item)]: checked,
         });
       });
       setSelectedState(newSelectedState);
@@ -127,60 +165,50 @@ export const UserList = () => {
     []
   );
 
-  const columns = [
-    {
-      field: "fullName",
-      title: "Full name",
-      width: "",
-    },
-    {
-      field: "birthday",
-      title: "Birthday",
-      width: "",
-      format: "{0:D}",
-    },
-    {
-      field: "gender",
-      title: "Gender",
-      width: "",
-    },
-    {
-      field: "email",
-      title: "Email",
-      width: "",
-    },
-    {
-      field: "phoneNumber",
-      title: "Phone Number",
-      width: "",
-    },
-    {
-      field: "address",
-      title: "Address",
-      width: "",
-    },
-  ];
+  const newData = useMemo(() => {
+    return process(
+      data.map((item) => ({
+        ...item,
+        [USER_SELECTED_FIELD]: selectedState[idGetter(item)],
+      })),
+      dataState
+    );
+  }, [data, dataState, selectedState]);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timeOut);
-    };
-  });
+  const handleDeleteUser = () => {
+    onDelete(userIds);
+    deleteUser(userIds);
+    const contentToast = userIds.length > 1 ? "Users deleted" : "User deleted";
+    onAddToast({
+      id: new Date(),
+      content: contentToast,
+      type: "success",
+    });
+    setUserIds([]);
+    setSelectedState({});
+    setIsVisibleConfirmModal(false);
+  };
 
   return (
     <div className="w-[90%] lg:px-8 xl:px-0 m-auto p-5">
       <div className="flex justify-end space-x-3">
         <Link to="/user/new">
-          <Button className="buttons-container-button" icon="plus">
+          <Button
+            className="buttons-container-button"
+            icon="plus"
+            themeColor="primary"
+          >
             New
           </Button>
         </Link>
+        <Button
+          className="buttons-container-button"
+          icon="plus"
+          themeColor="primary"
+          onClick={() => setIsShowModalCreateUpdate(true)}
+        >
+          New
+        </Button>
         <Link
           to={`user/${userIds[0]}`}
           className={userIds.length !== 1 ? "pointer-events-none" : ""}
@@ -189,6 +217,7 @@ export const UserList = () => {
             className="buttons-container-button"
             icon="edit"
             disabled={userIds.length !== 1}
+            themeColor="primary"
           >
             Edit
           </Button>
@@ -197,70 +226,51 @@ export const UserList = () => {
           className="buttons-container-button"
           icon="delete"
           themeColor="error"
-          onClick={() => setIsVisibleModal(true)}
+          onClick={() => setIsVisibleConfirmModal(true)}
           disabled={userIds.length === 0}
         >
           Delete
         </Button>
       </div>
       <div className="mt-5">
-        {users.length === 0 && isLoading && <LoadingPanel />}
+        {isLoading && users.length === 0 && <LoadingPanel />}
         <Grid
-          style={{ height: "80vh" }}
-          data={orderBy(
-            dataState
-              .map((item) => ({
-                ...item,
-                [SELECTED_FIELD]: selectedState[idGetter(item)],
-              }))
-              .slice(page.skip, page.take + page.skip),
-            sort
-          )}
-          skip={page.skip}
-          take={page.take}
-          total={dataState.length}
-          pageable={{
-            info: true,
-            buttonCount: 5,
-            pageSizes: true,
-          }}
-          onPageChange={pageChange}
-          dataItemKey={DATA_ITEM_KEY}
-          selectedField={SELECTED_FIELD}
-          selectable={{
-            enabled: true,
-            drag: false,
-            cell: false,
-            mode: "multiple",
-          }}
-          sortable={true}
-          sort={sort}
-          onSortChange={(e: GridSortChangeEvent) => {
-            setSort(e.sort);
-          }}
+          style={{ height: "75vh" }}
+          data={newData}
+          {...dataState}
+          pageable={pageable}
+          onDataStateChange={onDataStateChange}
           onSelectionChange={onSelectionChange}
           onHeaderSelectionChange={onHeaderSelectionChange}
         >
-          <GridColumn
-            field={SELECTED_FIELD}
-            width="45px"
-            headerSelectionValue={
-              dataState
-                .slice(page.skip, page.take + page.skip)
-                .findIndex((item) => !selectedState[idGetter(item)]) === -1
-            }
-          />
-          {columns.map((column, index) => (
-            <GridColumn key={index} {...column} />
+          <GridNoRecords>
+            {isLoading ? "Loading..." : "There is no data available"}
+          </GridNoRecords>
+
+          <GridColumn field={USER_SELECTED_FIELD} width="50px" />
+          {userColumns.map((column, index) => (
+            <GridColumn key={index} {...column} columnMenu={ColumnMenu} />
           ))}
         </Grid>
+
+        <DeleteConfirm
+          content="Are you sure you want to continue?"
+          visible={isVisibleConfirmModal}
+          setVisible={setIsVisibleConfirmModal}
+          onConfirm={handleDeleteUser}
+        />
+
+        <CreateOrUpdateModal
+          setVisible={setIsShowModalCreateUpdate}
+          visible={isShowModalCreateUpdate}
+          onConfirm={() => console.log("confirm")}
+        >
+          <Form
+            onSubmit={() => console.log("onSubmit")}
+            render={(formRenderProps) => <CreateOrUpdateForm />}
+          ></Form>
+        </CreateOrUpdateModal>
       </div>
-      <DeleteConfirm
-        content="Are you sure you want to continue?"
-        visible={isVisibleModal}
-        setVisible={setIsVisibleModal}
-        onConfirm={handleDeleteUser}
-      />
     </div>
   );
-};
+});

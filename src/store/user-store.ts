@@ -1,7 +1,6 @@
 import md5 from "md5";
 import { makeAutoObservable, runInAction } from "mobx";
 import { User } from "../interfaces/user";
-import { getUsers } from "../mockapi/user-list";
 
 const deleteItem = (arr: any[], itemId: string) => {
   return arr.filter((item) => item.id !== itemId);
@@ -9,8 +8,6 @@ const deleteItem = (arr: any[], itemId: string) => {
 
 export class UserStore {
   users: User[] = [];
-
-  getUser = getUsers().then((res) => (this.users = res));
 
   constructor() {
     makeAutoObservable(this);

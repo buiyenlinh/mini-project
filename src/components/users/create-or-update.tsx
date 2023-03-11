@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Stepper } from "@progress/kendo-react-layout";
@@ -39,6 +40,23 @@ const CreateOrUpdateUser = () => {
   const [user, setUser] = useState<User | undefined>({
     birthday: null,
   });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, []);
+
+  const renderLoading = useMemo(() => {
+    if (isLoading) return <LoadingPanel />;
+    return <NotFound />;
+  }, [isLoading]);
 
   useEffect(() => {
     getUser(slug).then((res) => {
@@ -118,6 +136,8 @@ const CreateOrUpdateUser = () => {
         isValid: index === currentStep ? isValid : step.isValid,
       }));
 
+      if (!isValid) return;
+
       setSteps(current);
       setCurrentStep(() => Math.min(currentStep + 1, steps.length - 1));
 
@@ -184,39 +204,22 @@ const CreateOrUpdateUser = () => {
     ]
   );
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, []);
-
-  const renderLoading = useMemo(() => {
-    if (isLoading) return <LoadingPanel />;
-    return <NotFound />;
-  }, [isLoading]);
-
   return (
     <>
       {slug !== "new" && !user?.id ? (
         renderLoading
       ) : (
         <div className="w-[90%] lg:px-8 xl:px-0 m-auto py-5">
-          <div
-            className="flex items-center cursor-pointer"
-            onClick={() => handleGoBack()}
-          >
-            <span className="k-icon k-i-arrow-chevron-left"></span>
-            <span>Back</span>
-          </div>
           <div className="mt-5">
-            <div className="w-[70%] border-[1px] border-black-600 p-5 m-auto">
-              <h2 className="font-bold text-lg">
+            <div className="w-[70%] border-[1px] border-black-600 p-7 m-auto">
+              <div
+                className="flex items-center cursor-pointer"
+                onClick={() => handleGoBack()}
+              >
+                <span className="k-icon k-i-arrow-chevron-left"></span>
+                <span>Back</span>
+              </div>
+              <h2 className="font-bold uppercase text-xl text-center pb-3">
                 {isNewUser ? "New user" : "Update user"}
               </h2>
 
@@ -257,9 +260,7 @@ const CreateOrUpdateUser = () => {
 
                           <Button
                             themeColor="primary"
-                            disabled={
-                              isLastStep ? !isPreviousStepsValid : false
-                            }
+                            disabled={!formRenderProps.allowSubmit}
                             onClick={formRenderProps.onSubmit}
                           >
                             <span>{titleSubmitButton}</span>

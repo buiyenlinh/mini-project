@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.k-notification {
+/* .k-notification {
   display: flex !important;
-}
+} */
 
-.k-grid td.k-selected,
+/* .k-grid td.k-selected,
 .k-grid .k-table-row.k-selected > td,
 .k-grid .k-table-td.k-selected,
 .k-grid .k-table-row.k-selected > .k-table-td {
@@ -20,4 +20,4 @@
 .k-dialog-titlebar,
 .k-window-content.k-dialog-content {
   background: #fff !important;
-}
+} */
