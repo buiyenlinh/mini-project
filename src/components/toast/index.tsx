@@ -11,6 +11,7 @@ const Toast = ({ toastList }: ToastProps) => {
         top: 0,
         left: "50%",
         transform: "translateX(-50%)",
+        zIndex: "100000",
       }}
     >
       {toastList.map((toast, index) => (

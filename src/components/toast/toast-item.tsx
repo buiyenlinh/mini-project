@@ -3,10 +3,17 @@ import { Notification } from "@progress/kendo-react-notification";
 import { useEffect } from "react";
 import useStore from "../../store";
 
+export type ToastType =
+  | "none"
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | undefined;
 export interface ToastItemProps {
   id: Date;
   content: string;
-  type: "none" | "success" | "error" | "warning" | "info" | undefined;
+  type: ToastType;
 }
 
 const ToastItem = ({ id, content, type }: ToastItemProps) => {

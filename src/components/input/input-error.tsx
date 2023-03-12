@@ -12,10 +12,10 @@ const InputError = (fieldRenderProps: FieldRenderProps) => {
     optional,
     touched,
     label,
+    onFocus,
     ...others
   } = fieldRenderProps;
 
-  console.log(fieldRenderProps);
   return (
     <FieldWrapper>
       <Label editorId={id} editorDisabled={disabled} optional={optional}>
@@ -26,10 +26,11 @@ const InputError = (fieldRenderProps: FieldRenderProps) => {
           )}
         </span>
       </Label>
-      <Input {...others} />
-      {touched && visited && validationMessage && (
+      <Input {...others} valid={valid} />
+      {visited && validationMessage && <Error>{validationMessage}</Error>}
+      {/* {touched && visited && validationMessage && (
         <Error>{validationMessage}</Error>
-      )}
+      )} */}
     </FieldWrapper>
   );
 };

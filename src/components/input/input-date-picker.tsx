@@ -3,11 +3,20 @@ import { FieldRenderProps, FieldWrapper } from "@progress/kendo-react-form";
 import { Label, Error } from "@progress/kendo-react-labels";
 
 export const InputDatePicker = (fieldRenderProps: FieldRenderProps) => {
-  const { validationMessage, touched, label, id, valid, ...others } =
-    fieldRenderProps;
+  const {
+    validationMessage,
+    touched,
+    label,
+    id,
+    valid,
+    labelId,
+    editorId,
+    editorDisabled,
+    ...others
+  } = fieldRenderProps;
   return (
     <FieldWrapper>
-      <Label editorValid={valid}>
+      <Label id={labelId} editorId={editorId} editorDisabled={editorDisabled}>
         <span className="font-bold">{label}</span>
       </Label>
       <DatePicker valid={valid} format="dd/MM/yyyy" id={id} {...others} />

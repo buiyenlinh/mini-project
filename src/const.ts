@@ -10,6 +10,9 @@ interface columnInterface {
   format?: string;
 }
 
+export const USER_DATA_ITEM_KEY = "id";
+export const USER_SELECTED_FIELD = "selected";
+
 export const userColumns: columnInterface[] = [
   {
     field: "fullName",
@@ -54,5 +57,11 @@ export const genders = [
   { label: "Other", value: "Other" },
 ];
 
-export const USER_DATA_ITEM_KEY = "id";
-export const USER_SELECTED_FIELD = "selected";
+export const departments: string[] = [
+  "Administration",
+  "Marketing",
+  "Purchasing",
+  "Human Resources",
+  "IT",
+  "Sales",
+];

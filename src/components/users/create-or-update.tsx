@@ -8,15 +8,17 @@ import {
   FormElement,
   FormSubmitClickEvent,
 } from "@progress/kendo-react-form";
-import Information from "./information";
-import { Contact as UserContact } from "./contact";
-import { Button } from "@progress/kendo-react-buttons";
+import { Information } from "./steps/information";
+import { Contact as UserContact } from "./steps/contact";
 import useStore from "../../store";
 import { observer } from "mobx-react";
 import NotFound from "../not-found";
 import { getUser } from "../../mockapi/user-list";
 import { User } from "../../interfaces/user";
 import LoadingPanel from "../loading";
+import { ButtonCustom } from "../button";
+import { checkDisabledSubmitButton } from "../../helper";
+import { ToastType } from "../toast/toast-item";
 
 export type DetaiUserParams = {
   slug: string;
@@ -32,16 +34,26 @@ const stepPages = [<Information />, <UserContact />];
 const CreateOrUpdateUser = () => {
   const { slug } = useParams<DetaiUserParams>();
   const history = useHistory();
+
   const { userStore, toastStore } = useStore();
+  const { onAddToast } = toastStore;
   const { onAdd, onUpdate, onCreateId, getUserById, onExistEmailOrPhone } =
     userStore;
-  const { onAddToast } = toastStore;
 
-  const [user, setUser] = useState<User | undefined>({
-    birthday: null,
-  });
-
+  const [user, setUser] = useState<User>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const [steps, setSteps] = useState<Step[]>([
+    {
+      label: "Information",
+      isValid: undefined,
+    },
+    {
+      label: "Contact",
+      isValid: undefined,
+    },
+  ]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -60,33 +72,16 @@ const CreateOrUpdateUser = () => {
 
   useEffect(() => {
     getUser(slug).then((res) => {
-      if (res) {
-        setUser({ ...res, birthday: new Date(res.birthday) });
-      }
+      setUser(res);
     });
   }, [slug]);
 
   useEffect(() => {
     const userInfo = getUserById(slug);
     if (userInfo) {
-      setUser({
-        ...userInfo,
-        birthday: userInfo.birthday ? new Date(userInfo.birthday) : null,
-      });
+      setUser(userInfo);
     }
   }, [getUserById, slug]);
-
-  const [currentStep, setCurrentStep] = useState(0);
-  const [steps, setSteps] = useState<Step[]>([
-    {
-      label: "Information",
-      isValid: undefined,
-    },
-    {
-      label: "Contact",
-      isValid: undefined,
-    },
-  ]);
 
   const handleGoBack = () => {
     history.goBack();
@@ -104,20 +99,30 @@ const CreateOrUpdateUser = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
+  const handleAddToast = useCallback(
+    (content: string, type: ToastType) => {
+      onAddToast({
+        id: new Date(),
+        content: content,
+        type: type,
+      });
+    },
+    [onAddToast]
+  );
+
   const isLastStep = useMemo(() => {
     return currentStep === steps.length - 1;
   }, [currentStep, steps]);
 
-  const isPreviousStepsValid = useMemo(() => {
-    return (
-      steps
-        .slice(0, currentStep)
-        .findIndex((current) => current.isValid === false) === -1
-    );
-  }, [currentStep, steps]);
-
-  const isLastStepValid = useMemo(() => {
-    return steps[steps.length - 1].isValid;
+  const isAllStepsValid = useMemo(() => {
+    let isValid = true;
+    steps.forEach((_step) => {
+      if (!_step.isValid || _step.isValid === undefined) {
+        isValid = false;
+        return;
+      }
+    });
+    return isValid;
   }, [steps]);
 
   const titleSubmitButton = useMemo(() => {
@@ -141,67 +146,66 @@ const CreateOrUpdateUser = () => {
       setSteps(current);
       setCurrentStep(() => Math.min(currentStep + 1, steps.length - 1));
 
-      if (isPreviousStepsValid && isLastStepValid) {
-        let userInfo = {
-          fullName: values.fullName,
-          birthday: values.birthday,
-          gender: values.gender,
-          email: values.email,
-          phoneNumber: values.phoneNumber,
-          address: values.address,
-        };
+      if (isAllStepsValid) {
+        const id = user.id ? user.id : onCreateId();
+        const userInfo = Object.assign(values, { id });
 
         const errors = onExistEmailOrPhone(
           values.email,
           values.phoneNumber,
-          !isNewUser ? slug : undefined
+          slug
         );
+
         if (errors.length > 0) {
           errors.forEach((item) => {
-            onAddToast({
-              id: new Date(),
-              content: item,
-              type: "error",
-            });
+            handleAddToast(item, "error");
           });
         } else {
           if (isNewUser) {
-            userInfo = Object.assign(userInfo, { id: onCreateId() });
             onAdd(userInfo);
             addUser(userInfo);
-            onAddToast({
-              id: new Date(),
-              content: "User added",
-              type: "success",
-            });
           } else {
-            userInfo = Object.assign(userInfo, { id: slug });
             onUpdate(userInfo);
             updateUser(userInfo);
-            onAddToast({
-              id: new Date(),
-              content: "User updated",
-              type: "success",
-            });
           }
+
+          handleAddToast(isNewUser ? "User added" : "User updated", "success");
           history.push("/");
         }
       }
     },
     [
       steps,
-      isPreviousStepsValid,
-      isLastStepValid,
+      isAllStepsValid,
       currentStep,
-      onExistEmailOrPhone,
-      onAddToast,
-      isNewUser,
-      history,
+      user.id,
       onCreateId,
-      onAdd,
+      onExistEmailOrPhone,
+      isNewUser,
       slug,
+      handleAddToast,
+      history,
+      onAdd,
       onUpdate,
     ]
+  );
+
+  const isDisabledSubmitButton = useCallback(
+    (errors: { [name: string]: any }, allowSubmit: boolean) => {
+      const isError = checkDisabledSubmitButton(errors);
+
+      let isDisabled = false;
+      if (isError || !allowSubmit) {
+        isDisabled = true;
+      }
+
+      if (user && !isError) {
+        isDisabled = false;
+      }
+
+      return isDisabled;
+    },
+    [user]
   );
 
   return (
@@ -216,8 +220,8 @@ const CreateOrUpdateUser = () => {
                 className="flex items-center cursor-pointer"
                 onClick={() => handleGoBack()}
               >
-                <span className="k-icon k-i-arrow-chevron-left"></span>
-                <span>Back</span>
+                <i className="fas fa-angle-left mr-2" />
+                <span className="inline-block pb-[2px] font-bold">Back</span>
               </div>
               <h2 className="font-bold uppercase text-xl text-center pb-3">
                 {isNewUser ? "New user" : "Update user"}
@@ -228,51 +232,45 @@ const CreateOrUpdateUser = () => {
                 onSubmitClick={onStepSubmit}
                 initialValues={user}
                 key={JSON.stringify(user)}
-                render={(formRenderProps) => (
-                  <div style={{ alignSelf: "center" }}>
-                    <FormElement>
-                      {render}
-                      <span
-                        style={{ marginTop: "40px" }}
-                        className={"k-form-separator"}
-                      />
-                      <div
-                        style={{
-                          justifyContent: "space-between",
-                          alignContent: "center",
-                        }}
-                        className={
-                          "k-form-buttons k-button k-button-md k-rounded-md k-button-solid k-button-solid-bases-end"
-                        }
-                      >
-                        <span>
-                          Step {currentStep + 1} of {steps.length}
-                        </span>
-                        <div className="space-x-2">
-                          {currentStep !== 0 && (
-                            <Button
-                              onClick={handlePreviousStep}
-                              iconClass="k-i-arrow-chevron-left"
-                            >
-                              Previous
-                            </Button>
-                          )}
+                render={(formRenderProps) => {
+                  const isDisabled = isDisabledSubmitButton(
+                    formRenderProps.errors,
+                    formRenderProps.allowSubmit
+                  );
 
-                          <Button
-                            themeColor="primary"
-                            disabled={!formRenderProps.allowSubmit}
-                            onClick={formRenderProps.onSubmit}
-                          >
-                            <span>{titleSubmitButton}</span>
-                            {!isLastStep && (
-                              <span className="k-i-arrow-chevron-up pl-2" />
+                  return (
+                    <div style={{ alignSelf: "center" }}>
+                      <FormElement>
+                        {render}
+                        <span className="k-form-separator mt-10" />
+                        <div className="k-form-buttons k-button k-button-md k-rounded-md k-button-solid k-button-solid-bases-end content-center !justify-between">
+                          <span className="font-bold">
+                            Step {currentStep + 1} of {steps.length}
+                          </span>
+                          <div className="space-x-2">
+                            {currentStep !== 0 && (
+                              <ButtonCustom
+                                title="Previous"
+                                iconLeftClass="fas fa-angle-left"
+                                onClick={handlePreviousStep}
+                              />
                             )}
-                          </Button>
+
+                            <ButtonCustom
+                              themeColor="primary"
+                              title={titleSubmitButton}
+                              iconRightClass={
+                                !isLastStep ? "fas fa-angle-right" : ""
+                              }
+                              disabled={isDisabled}
+                              onClick={formRenderProps.onSubmit}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </FormElement>
-                  </div>
-                )}
+                      </FormElement>
+                    </div>
+                  );
+                }}
               />
             </div>
           </div>

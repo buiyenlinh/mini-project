@@ -7,3 +7,16 @@ export const isPhoneNumberValidator = (value: string) => {
   const phoneRegex: RegExp = new RegExp(/(84|0[3|5|7|8|9])+([0-9]{8,9})\b/);
   return phoneRegex.test(value);
 };
+
+export const checkDisabledSubmitButton = (errorItem: {
+  [name: string]: any;
+}) => {
+  let isDisabled = false;
+  for (let key in errorItem) {
+    if (errorItem[key] !== "") {
+      isDisabled = true;
+      break;
+    }
+  }
+  return isDisabled;
+};

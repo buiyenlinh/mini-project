@@ -15,14 +15,18 @@ export class UserStore {
 
   onAdd = (user: User) => {
     runInAction(() => {
-      this.users = this.users.concat(user);
+      this.users = [user, ...this.users];
     });
   };
 
   onUpdate = (user: User) => {
     runInAction(() => {
-      const index = this.users.findIndex((item) => item.id === user.id);
-      this.users[index] = user;
+      const newList = this.users.map((item) => {
+        if (item.id === user.id) item = user;
+        return item;
+      });
+
+      this.users = newList;
     });
   };
 

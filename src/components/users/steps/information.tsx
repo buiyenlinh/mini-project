@@ -1,22 +1,22 @@
 import { Field } from "@progress/kendo-react-form";
-import InputError from "../input/input-error";
-import FieldRadioGroup from "../radio";
-import { genders } from "../../const";
-import { birthdayValidator, fullNameValidator } from "./validate";
-import { InputDatePicker } from "../input/input-date-picker";
+import InputError from "../../input/input-error";
+import FieldRadioGroup from "../../radio";
+import { genders } from "../../../const";
+import { birthdayValidator, requiredValidator } from "../validate";
+import { InputDatePicker } from "../../input/input-date-picker";
 
-const Information = () => {
+export const Information = () => {
   return (
     <div>
-      <div className="mb-3">
+      <div className="mb-5">
         <Field
           name="fullName"
           component={InputError}
           label="Full name"
-          validator={fullNameValidator}
+          validator={requiredValidator}
         />
       </div>
-      <div className="mb-3">
+      <div className="mb-5">
         <Field
           name="gender"
           component={FieldRadioGroup}
@@ -25,7 +25,7 @@ const Information = () => {
         />
       </div>
 
-      <div className="mb-3">
+      <div className="mb-5">
         <Field
           key={"birthday"}
           id={"birthday"}
@@ -38,5 +38,3 @@ const Information = () => {
     </div>
   );
 };
-
-export default Information;

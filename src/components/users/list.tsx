@@ -1,13 +1,20 @@
 import { observer } from "mobx-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { deleteUser, getUsers } from "../../mockapi/user-list";
+import {
+  addUser,
+  deleteUser,
+  getUsers,
+  updateUser,
+} from "../../mockapi/user-list";
 import useStore from "../../store";
 import { getter, process } from "@progress/kendo-data-query";
 import {
   getSelectedState,
   Grid,
   GridColumn,
+  GridColumnMenuWrapper,
   GridDataStateChangeEvent,
+  GridHeaderCellProps,
   GridHeaderSelectionChangeEvent,
   GridNoRecords,
   GridPagerSettings,
@@ -21,12 +28,14 @@ import {
   USER_SELECTED_FIELD,
 } from "../../const";
 import { User } from "../../interfaces/user";
-import { Button } from "@progress/kendo-react-buttons";
 import { Link } from "react-router-dom";
-import DeleteConfirm from "../modals/delete-confirm";
-import { CreateOrUpdate as CreateOrUpdateModal } from "../modals/create-or-update";
+
+import { ModalCustom } from "../modals";
 import { CreateOrUpdateForm } from "./create-or-update-form";
-import { Form } from "@progress/kendo-react-form";
+import { Form, FormElement } from "@progress/kendo-react-form";
+import { ButtonCustom } from "../button";
+import { ToastType } from "../toast/toast-item";
+import { checkDisabledSubmitButton } from "../../helper";
 
 interface DataState {
   take: number;
@@ -61,15 +70,26 @@ const idGetter = getter(USER_DATA_ITEM_KEY);
 
 export const List = observer(() => {
   const { userStore, toastStore } = useStore();
-  const { users, onSetUsers, onDelete } = userStore;
+  const {
+    users,
+    onSetUsers,
+    onDelete,
+    onUpdate,
+    getUserById,
+    onCreateId,
+    onAdd,
+    onExistEmailOrPhone,
+  } = userStore;
   const { onAddToast } = toastStore;
 
   const [dataState, setDataState] = useState<DataState>(initialState);
   const [data, setData] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userIds, setUserIds] = useState<string[]>([]);
+
   const [isVisibleConfirmModal, setIsVisibleConfirmModal] = useState(false);
   const [isShowModalCreateUpdate, setIsShowModalCreateUpdate] = useState(false);
+  const [user, setUser] = useState<User>({});
 
   useEffect(() => {
     setIsLoading(true);
@@ -102,10 +122,6 @@ export const List = observer(() => {
     });
     setData(newData);
   }, [users]);
-
-  useEffect(() => {
-    console.log("userIds", userIds);
-  }, [userIds]);
 
   const onDataStateChange = (e: GridDataStateChangeEvent) => {
     setDataState((prevState) => ({
@@ -175,62 +191,140 @@ export const List = observer(() => {
     );
   }, [data, dataState, selectedState]);
 
+  const resetUserSelect = () => {
+    setUserIds([]);
+    setUser({});
+    setSelectedState({});
+  };
+
+  const handleAddToast = useCallback(
+    (content: string, type: ToastType) => {
+      onAddToast({
+        id: new Date(),
+        content: content,
+        type: type,
+      });
+    },
+    [onAddToast]
+  );
+
   const handleDeleteUser = () => {
     onDelete(userIds);
     deleteUser(userIds);
-    const contentToast = userIds.length > 1 ? "Users deleted" : "User deleted";
-    onAddToast({
-      id: new Date(),
-      content: contentToast,
-      type: "success",
-    });
-    setUserIds([]);
-    setSelectedState({});
+    const toastTitle = userIds.length > 1 ? "Users deleted" : "User deleted";
+    handleAddToast(toastTitle, "success");
+    resetUserSelect();
     setIsVisibleConfirmModal(false);
+  };
+
+  const onAddOrUpdate = useCallback(
+    (dataItem: { [name: string]: any }) => {
+      const id = user.id ? user.id : onCreateId();
+      dataItem = Object.assign(dataItem, { id });
+
+      const errors = onExistEmailOrPhone(
+        dataItem.email,
+        dataItem.phoneNumber,
+        user.id
+      );
+
+      if (errors.length > 0) {
+        errors.forEach((item) => {
+          handleAddToast(item, "error");
+        });
+      } else {
+        if (user.id) {
+          onUpdate(dataItem);
+          updateUser(dataItem);
+          resetUserSelect();
+        } else {
+          onAdd(dataItem);
+          addUser(dataItem);
+        }
+        const toastTitle = user.id ? "User updated" : "User added";
+        handleAddToast(toastTitle, "success");
+        setIsShowModalCreateUpdate(false);
+      }
+    },
+    [handleAddToast, onAdd, onCreateId, onExistEmailOrPhone, onUpdate, user.id]
+  );
+
+  const getUserUpdate = () => {
+    const userInfo = getUserById(userIds[0]);
+    if (userInfo) {
+      setUser(userInfo);
+    }
+    setIsShowModalCreateUpdate(true);
+  };
+
+  const handleShowUserModal = () => {
+    setUser({});
+    setIsShowModalCreateUpdate(true);
+  };
+
+  const HeaderCell = (props: GridHeaderCellProps) => {
+    return (
+      <div>
+        <div className="pb-[3px] font-bold text-white">
+          {props.title} <span>{props.children}</span>
+        </div>
+        <div className="text-white">
+          <GridColumnMenuWrapper {...props.columnMenuWrapperProps} />
+        </div>
+      </div>
+    );
   };
 
   return (
     <div className="w-[90%] lg:px-8 xl:px-0 m-auto p-5">
-      <div className="flex justify-end space-x-3">
-        <Link to="/user/new">
-          <Button
-            className="buttons-container-button"
-            icon="plus"
-            themeColor="primary"
-          >
-            New
-          </Button>
-        </Link>
-        <Button
+      <div className="flex justify-end space-x-3 pt-3">
+        <ButtonCustom
           className="buttons-container-button"
-          icon="plus"
           themeColor="primary"
-          onClick={() => setIsShowModalCreateUpdate(true)}
-        >
-          New
-        </Button>
+          onClick={handleShowUserModal}
+          iconLeftClass="fa fa-user-plus"
+          title="New"
+        />
+
+        <ButtonCustom
+          className="buttons-container-button"
+          disabled={userIds.length !== 1}
+          themeColor="primary"
+          onClick={getUserUpdate}
+          iconLeftClass="fa fa-edit"
+          title="Edit"
+        />
+
+        <Link to="/user/new">
+          <ButtonCustom
+            className="buttons-container-button"
+            themeColor="primary"
+            iconLeftClass="fa fa-user-plus"
+            title="New"
+          />
+        </Link>
+
         <Link
           to={`user/${userIds[0]}`}
           className={userIds.length !== 1 ? "pointer-events-none" : ""}
         >
-          <Button
+          <ButtonCustom
             className="buttons-container-button"
-            icon="edit"
             disabled={userIds.length !== 1}
             themeColor="primary"
-          >
-            Edit
-          </Button>
+            iconLeftClass="fa fa-edit"
+            title="Edit"
+          />
         </Link>
-        <Button
+
+        <ButtonCustom
           className="buttons-container-button"
-          icon="delete"
           themeColor="error"
           onClick={() => setIsVisibleConfirmModal(true)}
           disabled={userIds.length === 0}
-        >
-          Delete
-        </Button>
+          iconLeftClass="fa fa-trash"
+          title="Delete"
+        />
       </div>
       <div className="mt-5">
         {isLoading && users.length === 0 && <LoadingPanel />}
@@ -247,29 +341,82 @@ export const List = observer(() => {
             {isLoading ? "Loading..." : "There is no data available"}
           </GridNoRecords>
 
-          <GridColumn field={USER_SELECTED_FIELD} width="50px" />
+          <GridColumn
+            field={USER_SELECTED_FIELD}
+            width="50px"
+            headerClassName="bg-[#67a0f4] !text-center"
+            className="!text-center"
+          />
           {userColumns.map((column, index) => (
-            <GridColumn key={index} {...column} columnMenu={ColumnMenu} />
+            <GridColumn
+              key={index}
+              {...column}
+              columnMenu={ColumnMenu}
+              headerCell={HeaderCell}
+              headerClassName="!bg-[#67a0f4]"
+            />
           ))}
         </Grid>
 
-        <DeleteConfirm
-          content="Are you sure you want to continue?"
+        <ModalCustom
           visible={isVisibleConfirmModal}
           setVisible={setIsVisibleConfirmModal}
-          onConfirm={handleDeleteUser}
-        />
+          modalTitle={userIds.length > 1 ? "Delete users" : "Delete user"}
+          iconClass="fa fa-trash"
+          headerModalClass="text-red-600"
+          confirmBtn={{
+            title: "Yes",
+            themeColor: "error",
+            onClick: handleDeleteUser,
+            className: "w-1/2",
+          }}
+          cancelBtn={{
+            title: "No",
+            onClick: () => setIsVisibleConfirmModal(false),
+            className: "w-1/2",
+          }}
+        >
+          <div className="w-[300px]">Are you sure you want to continue?</div>
+        </ModalCustom>
 
-        <CreateOrUpdateModal
+        <ModalCustom
           setVisible={setIsShowModalCreateUpdate}
           visible={isShowModalCreateUpdate}
-          onConfirm={() => console.log("confirm")}
+          modalTitle={user.id ? "New user" : "Update user"}
+          iconClass={user.id ? "fa fa-edit" : "fa fa-user-plus"}
+          headerModalClass="text-blue-600"
         >
           <Form
-            onSubmit={() => console.log("onSubmit")}
-            render={(formRenderProps) => <CreateOrUpdateForm />}
-          ></Form>
-        </CreateOrUpdateModal>
+            onSubmit={onAddOrUpdate}
+            initialValues={user}
+            key={JSON.stringify(user)}
+            render={(formRenderProps) => {
+              const isError = checkDisabledSubmitButton(formRenderProps.errors);
+              return (
+                <FormElement>
+                  <CreateOrUpdateForm />
+                  <div className="space-x-4 border-t-2 pt-5 mt-5 flex justify-between">
+                    <ButtonCustom
+                      className="w-1/2"
+                      title={user ? "Update" : "Add"}
+                      themeColor="primary"
+                      disabled={
+                        isError || formRenderProps.allowSubmit === false
+                      }
+                      onClick={formRenderProps.onSubmit}
+                    />
+
+                    <ButtonCustom
+                      className="w-1/2"
+                      onClick={() => setIsShowModalCreateUpdate(false)}
+                      title="Close"
+                    />
+                  </div>
+                </FormElement>
+              );
+            }}
+          />
+        </ModalCustom>
       </div>
     </div>
   );
