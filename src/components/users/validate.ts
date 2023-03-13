@@ -1,9 +1,7 @@
 import { isEmailValidator, isPhoneNumberValidator } from "../../helper";
 
 export const requiredValidator = (value: string) => {
-  if (value) {
-    value = value.trim();
-  }
+  value = value && value.trim();
   return value ? "" : "This field is required.";
 };
 
@@ -13,16 +11,12 @@ export const birthdayValidator = (value: Date) => {
 };
 
 export const emailValidator = (value: string) => {
-  if (value) {
-    value = value.trim();
-  }
+  value = value && value.trim();
   return isEmailValidator(value) ? "" : "Please enter a valid email.";
 };
 
 export const phoneNumberValidator = (value: string) => {
-  if (value) {
-    value = value.trim();
-  }
+  value = value && value.trim();
   return isPhoneNumberValidator(value)
     ? ""
     : "Please enter a valid phone number.";

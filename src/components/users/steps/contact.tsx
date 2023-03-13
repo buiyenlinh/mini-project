@@ -24,9 +24,7 @@ export const Contact = ({ userId }: { userId?: string }) => {
   }, [slug, userId]);
 
   const onPhoneValidator = (value: string) => {
-    if (value) {
-      value = value.trim();
-    }
+    value = value && value.trim();
     const validString = phoneNumberValidator(value);
 
     const errorExist = onExistEmailOrPhone(undefined, value, getId);
@@ -34,9 +32,7 @@ export const Contact = ({ userId }: { userId?: string }) => {
   };
 
   const onEmailValidator = (value: string) => {
-    if (value) {
-      value = value.trim();
-    }
+    value = value && value.trim();
     const validString = emailValidator(value);
     const errorExist = onExistEmailOrPhone(value, undefined, getId);
     return validString || errorExist[0];

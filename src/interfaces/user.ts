@@ -8,4 +8,6 @@ export interface User {
   phoneNumber?: string;
   department?: string;
   level?: string;
+  created_at?: Date | null;
+  updated_at?: Date | null;
 }

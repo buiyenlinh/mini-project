@@ -183,6 +183,97 @@
       "department": "Administration",
       "level": "Level 2",
       "id": "a4e80cf9049cf698f1516001b93a2e20"
+    },
+    {
+      "fullName": "ere",
+      "gender": "Female",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "test1212@gmail.com",
+      "phoneNumber": "07123456784",
+      "address": "Hau Giang",
+      "department": "Marketing",
+      "id": "e40bccc4f2b6965d21be7c46e2427c4d",
+      "updated_at": "2023-03-13T06:48:52.842Z"
+    },
+    {
+      "fullName": "User test 01 aasas",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "gender": "Male",
+      "email": "test@gmail.comsdsd",
+      "phoneNumber": "09873746473",
+      "address": "Hau Giang",
+      "department": "Purchasing",
+      "level": "Level 1",
+      "id": "af07222027654793bdc6873755ef729f"
+    },
+    {
+      "fullName": "ddfdfdf",
+      "gender": "Female",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "NewEmails@email.com",
+      "phoneNumber": "07133456784",
+      "address": "3434",
+      "department": "Marketing",
+      "level": "Level 2",
+      "id": "abf3e3ae1de7fd6bd1c4b8fb77e22e32"
+    },
+    {
+      "fullName": "ddfdfdf",
+      "gender": "Female",
+      "birthday": "2023-03-01T17:00:00.000Z",
+      "email": "Newmails@email.com",
+      "phoneNumber": "07123476784",
+      "address": "Hau Giang",
+      "department": "Purchasing",
+      "id": "395a2988ded234558c6b3eb9adbbf7b6"
+    },
+    {
+      "fullName": "User test 01",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "Newasails@email.com",
+      "phoneNumber": "0712426784",
+      "address": "3434",
+      "department": "Human Resources",
+      "id": "8633de1e3a38797f41bae83e0f79e7af"
+    },
+    {
+      "email": "test233232@gmail.com",
+      "phoneNumber": "09873463434",
+      "fullName": "User test 01",
+      "gender": "Male",
+      "birthday": "2023-03-02T17:00:00.000Z",
+      "address": "3434",
+      "department": "Human Resources",
+      "level": "Level 2",
+      "id": "ef867a0cd280e94a8ec4934bcb2e0b6d",
+      "created_at": "2023-03-13T07:03:24.593Z",
+      "updated_at": "2023-03-13T07:03:24.593Z"
+    },
+    {
+      "fullName": "erererererasd s",
+      "gender": "Male",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "eretest@gmail.com",
+      "phoneNumber": "07123455667",
+      "address": "Can Thoerere",
+      "department": "Purchasing",
+      "level": "Level 3",
+      "id": "24ac532aec5d32b61596f9f2cda3c6b5",
+      "created_at": "2023-03-13T07:04:39.072Z",
+      "updated_at": "2023-03-13T07:15:43.680Z"
+    },
+    {
+      "fullName": "User test 01",
+      "gender": "Female",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "New343Emails@email.com",
+      "phoneNumber": "0973464737",
+      "address": "3434",
+      "department": "Purchasing",
+      "level": "Level 2",
+      "id": "029815188ab51545cec34494f77cfc74",
+      "created_at": "2023-03-13T07:58:58.589Z",
+      "updated_at": "2023-03-13T07:58:58.589Z"
     }
   ]
 }

@@ -219,7 +219,7 @@ const CreateOrUpdateUser = () => {
       {slug !== "new" && !user?.id ? (
         renderLoading
       ) : (
-        <div className="w-[90%] lg:px-8 xl:px-0 m-auto py-5">
+        <div className="2xl:w-[60%] w-[80%] lg:px-8 xl:px-0 m-auto py-5">
           <div className="mt-5">
             <div className="w-[70%] border-[1px] border-black-600 p-7 m-auto">
               <div
@@ -233,52 +233,63 @@ const CreateOrUpdateUser = () => {
                 {isNewUser ? "New user" : "Update user"}
               </h2>
 
-              <Stepper value={currentStep} items={steps} />
-              <Form
-                onSubmitClick={onStepSubmit}
-                initialValues={user}
-                key={JSON.stringify(user)}
-                render={(formRenderProps) => {
-                  const isDisabled = isDisabledSubmitButton(
-                    formRenderProps.errors,
-                    formRenderProps.allowSubmit
-                  );
+              <div className="flex justify-between">
+                <div className="">
+                  <Stepper
+                    value={currentStep}
+                    items={steps}
+                    orientation="vertical"
+                    className="w-[200px]"
+                  />
+                </div>
+                <div className="w-[calc(100%-200px)]">
+                  <Form
+                    onSubmitClick={onStepSubmit}
+                    initialValues={user}
+                    key={JSON.stringify(user)}
+                    render={(formRenderProps) => {
+                      const isDisabled = isDisabledSubmitButton(
+                        formRenderProps.errors,
+                        formRenderProps.allowSubmit
+                      );
 
-                  return (
-                    <div style={{ alignSelf: "center" }}>
-                      <FormElement>
-                        {render}
-                        <span className="k-form-separator mt-10" />
-                        <div className="k-form-buttons k-button k-button-md k-rounded-md k-button-solid k-button-solid-bases-end content-center !justify-between">
-                          <span className="font-bold">
-                            Step {currentStep + 1} of {steps.length}
-                          </span>
-                          <div className="space-x-2">
-                            {currentStep !== 0 && (
-                              <ButtonCustom
-                                title="Previous"
-                                iconLeftClass="fas fa-angle-left"
-                                onClick={handlePreviousStep}
-                              />
-                            )}
+                      return (
+                        <div style={{ alignSelf: "center" }}>
+                          <FormElement>
+                            {render}
+                            <span className="k-form-separator mt-10" />
+                            <div className="k-form-buttons k-button k-button-md k-rounded-md k-button-solid k-button-solid-bases-end content-center !justify-between">
+                              <span className="font-bold">
+                                Step {currentStep + 1} of {steps.length}
+                              </span>
+                              <div className="space-x-2">
+                                {currentStep !== 0 && (
+                                  <ButtonCustom
+                                    title="Previous"
+                                    iconLeftClass="fas fa-angle-left"
+                                    onClick={handlePreviousStep}
+                                  />
+                                )}
 
-                            <ButtonCustom
-                              themeColor="primary"
-                              title={titleSubmitButton}
-                              iconRightClass={
-                                !isLastStep ? "fas fa-angle-right" : ""
-                              }
-                              disabled={isDisabled}
-                              onClick={formRenderProps.onSubmit}
-                              type="submit"
-                            />
-                          </div>
+                                <ButtonCustom
+                                  themeColor="primary"
+                                  title={titleSubmitButton}
+                                  iconRightClass={
+                                    !isLastStep ? "fas fa-angle-right" : ""
+                                  }
+                                  disabled={isDisabled}
+                                  onClick={formRenderProps.onSubmit}
+                                  type="submit"
+                                />
+                              </div>
+                            </div>
+                          </FormElement>
                         </div>
-                      </FormElement>
-                    </div>
-                  );
-                }}
-              />
+                      );
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -78,7 +78,6 @@ export const List = observer(() => {
     getUserById,
     onCreateId,
     onAdd,
-    onExistEmailOrPhone,
   } = userStore;
   const { onAddToast } = toastStore;
 
@@ -115,10 +114,10 @@ export const List = observer(() => {
   useEffect(() => {
     const newData = users.map((user) => {
       const newUser = user;
-      if (newUser.birthday) {
-        newUser.birthday = new Date(newUser.birthday);
-      }
-      return user;
+      newUser.birthday = newUser.birthday && new Date(newUser.birthday);
+      newUser.created_at = newUser.created_at && new Date(newUser.created_at);
+      newUser.updated_at = newUser.updated_at && new Date(newUser.updated_at);
+      return newUser;
     });
     setData(newData);
   }, [users]);
@@ -224,31 +223,24 @@ export const List = observer(() => {
       const id = user.id ? user.id : onCreateId();
       dataItem = Object.assign(dataItem, { id });
 
-      const errors = onExistEmailOrPhone(
-        dataItem.email,
-        dataItem.phoneNumber,
-        user.id
-      );
-
-      if (errors.length > 0) {
-        errors.forEach((item) => {
-          handleAddToast(item, "error");
-        });
+      if (user.id) {
+        dataItem = Object.assign(dataItem, { updated_at: new Date() });
+        onUpdate(dataItem);
+        updateUser(dataItem);
+        resetUserSelect();
       } else {
-        if (user.id) {
-          onUpdate(dataItem);
-          updateUser(dataItem);
-          resetUserSelect();
-        } else {
-          onAdd(dataItem);
-          addUser(dataItem);
-        }
-        const toastTitle = user.id ? "User updated" : "User added";
-        handleAddToast(toastTitle, "success");
-        setIsShowModalCreateUpdate(false);
+        dataItem = Object.assign(dataItem, {
+          created_at: new Date(),
+          updated_at: new Date(),
+        });
+        onAdd(dataItem);
+        addUser(dataItem);
       }
+      const toastTitle = user.id ? "User updated" : "User added";
+      handleAddToast(toastTitle, "success");
+      setIsShowModalCreateUpdate(false);
     },
-    [handleAddToast, onAdd, onCreateId, onExistEmailOrPhone, onUpdate, user.id]
+    [handleAddToast, onAdd, onCreateId, onUpdate, user.id]
   );
 
   const getUserUpdate = () => {
@@ -342,7 +334,7 @@ export const List = observer(() => {
       <div className="mt-5">
         {isLoading && users.length === 0 && <LoadingPanel />}
         <Grid
-          style={{ height: "75vh" }}
+          style={{ height: "75vh", overflowX: "auto" }}
           data={newData}
           {...dataState}
           pageable={pageable}
@@ -366,8 +358,8 @@ export const List = observer(() => {
               {...column}
               columnMenu={ColumnMenu}
               headerCell={HeaderCell}
-              headerClassName="!bg-[#67a0f4] text-lg"
-              className="!p-4 text-base"
+              headerClassName="!bg-[#67a0f4] text-lg sm:!w-[216px] 2xl:!w-auto"
+              className="!p-4 text-base sm:!w-[200px] 2xl:!w-auto"
             />
           ))}
         </Grid>

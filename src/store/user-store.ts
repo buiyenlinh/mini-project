@@ -14,6 +14,7 @@ export class UserStore {
   }
 
   onAdd = (user: User) => {
+    console.log("user", user);
     runInAction(() => {
       this.users = [user, ...this.users];
     });
