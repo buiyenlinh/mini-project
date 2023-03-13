@@ -90,6 +90,16 @@ export const List = observer(() => {
   const [isShowModalCreateUpdate, setIsShowModalCreateUpdate] = useState(false);
   const [user, setUser] = useState<User>({});
 
+  const { innerWidth } = window;
+  const [windowWidth, setWindowWidth] = useState(innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      const { innerWidth } = window;
+      setWindowWidth(innerWidth);
+    });
+  }, []);
+
   useEffect(() => {
     setIsLoading(true);
     const timeOut = setTimeout(() => {
@@ -343,7 +353,9 @@ export const List = observer(() => {
           onHeaderSelectionChange={onHeaderSelectionChange}
         >
           <GridNoRecords>
-            {isLoading ? "Loading..." : "There is no data available"}
+            <div className="absolute left-1/2 -translate-x-1/2">
+              {isLoading ? "Loading..." : "There is no data available"}
+            </div>
           </GridNoRecords>
 
           <GridColumn
@@ -358,8 +370,9 @@ export const List = observer(() => {
               {...column}
               columnMenu={ColumnMenu}
               headerCell={HeaderCell}
-              headerClassName="!bg-[#67a0f4] text-lg sm:!w-[216px] 2xl:!w-auto"
-              className="!p-4 text-base sm:!w-[200px] 2xl:!w-auto"
+              headerClassName="!bg-[#67a0f4] text-lg"
+              className="!p-4 text-base "
+              width={windowWidth > 1536 ? column.width : "200px"}
             />
           ))}
         </Grid>

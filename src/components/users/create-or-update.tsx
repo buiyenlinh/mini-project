@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Stepper } from "@progress/kendo-react-layout";
 import { addUser, getUsers, updateUser } from "../../mockapi/user-list";
+import "../../styles/create-or-update-user.css";
 import {
   Form,
   FormElement,
@@ -219,9 +220,9 @@ const CreateOrUpdateUser = () => {
       {slug !== "new" && !user?.id ? (
         renderLoading
       ) : (
-        <div className="2xl:w-[60%] w-[80%] lg:px-8 xl:px-0 m-auto py-5">
+        <div className="xl:w-[60%] 2xl:w-1/2 sm:w-3/4 lg:px-8 xl:px-0 m-auto py-5">
           <div className="mt-5">
-            <div className="w-[70%] border-[1px] border-black-600 p-7 m-auto">
+            <div className="border-[1px] border-black-600 p-7 m-auto">
               <div
                 className="flex items-center cursor-pointer"
                 onClick={() => handleGoBack()}
@@ -234,7 +235,7 @@ const CreateOrUpdateUser = () => {
               </h2>
 
               <div className="flex justify-between">
-                <div className="">
+                <div>
                   <Stepper
                     value={currentStep}
                     items={steps}
