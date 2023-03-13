@@ -128,13 +128,6 @@
       "birthday": "2023-03-07T17:00:00.000Z"
     },
     {
-      "fullName": "a",
-      "phoneNumber": "07392223233",
-      "email": "123linhbui@gmail.com",
-      "address": "we23",
-      "id": "fb3338f9620f813866ef7bc5fcc3dc3f"
-    },
-    {
       "fullName": "122323",
       "birthday": "1970-01-02T00:00:00.000Z",
       "email": "test@gmail.com",
@@ -143,22 +136,53 @@
       "id": "5608a2596c57c9034cad25e1b94bdd40"
     },
     {
-      "fullName": "cccccccccccccccccccccccccccccccccc",
-      "gender": "Female",
-      "email": "lin12121212hbui@gmail.com",
-      "phoneNumber": "07922232912",
+      "fullName": "ere",
+      "email": "test123@gmail.com",
+      "phoneNumber": "07922923203",
       "address": "Hau Giang",
-      "id": "cd255f3bd9809157f0f8270a2cf00d55",
-      "birthday": "2023-02-28T17:00:00.000Z"
+      "department": "Marketing",
+      "id": "a6a22a560fa7032cc385a3c4db8e652f",
+      "level": "Level 4"
     },
     {
-      "fullName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "birthday": "2023-03-02T17:00:00.000Z",
+      "fullName": "ddfdfdf ",
+      "email": "test1234@gmail.com",
+      "phoneNumber": "09873464737",
+      "address": "Hau Giang",
+      "department": "Purchasing",
+      "level": "Level 3",
+      "id": "99e52c21b291a3e6df3f8936be3cddff"
+    },
+    {
+      "fullName": "ddfdfdf",
       "gender": "Female",
-      "email": "asa@gmail.com",
-      "phoneNumber": "07922230233",
-      "address": "Uc",
-      "id": "b258726a050db4aff40d7dcb1197683b"
+      "email": "test123123@gmail.com",
+      "phoneNumber": "09873464739",
+      "address": "Hau Giang",
+      "department": "Marketing",
+      "level": "Level 4",
+      "id": "d41a19672b7b448d191b18ff8460b533",
+      "updated_at": "2023-03-13T04:18:35.645Z"
+    },
+    {
+      "fullName": "User test 01",
+      "gender": "Male",
+      "birthday": "2023-02-28T17:00:00.000Z",
+      "email": "test123123123@gmail.com",
+      "phoneNumber": "09873469437",
+      "address": "Hau Giang",
+      "department": "Administration",
+      "level": "Level 2",
+      "id": "092f8adc06bfb042ae0813b94b6a0436"
+    },
+    {
+      "fullName": "ere",
+      "email": "sdsdtest@gmail.com",
+      "phoneNumber": "09873469737",
+      "address": "Hau Giang",
+      "department": "Administration",
+      "level": "Level 2",
+      "id": "a4e80cf9049cf698f1516001b93a2e20"
     }
   ]
 }

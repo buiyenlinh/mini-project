@@ -6,4 +6,6 @@ export interface User {
   address?: string;
   email?: string;
   phoneNumber?: string;
+  department?: string;
+  level?: string;
 }

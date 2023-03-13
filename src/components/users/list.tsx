@@ -134,6 +134,8 @@ export const List = observer(() => {
     [id: string]: boolean | number[];
   }>({});
 
+  const [isUpdate, setIsUpdate] = useState(false);
+
   const onSelectionChange = useCallback(
     (event: GridSelectionChangeEvent) => {
       const newSelectedState = getSelectedState({
@@ -255,17 +257,19 @@ export const List = observer(() => {
       setUser(userInfo);
     }
     setIsShowModalCreateUpdate(true);
+    setIsUpdate(true);
   };
 
   const handleShowUserModal = () => {
     setUser({});
     setIsShowModalCreateUpdate(true);
+    setIsUpdate(false);
   };
 
   const HeaderCell = (props: GridHeaderCellProps) => {
     return (
       <div>
-        <div className="pb-[3px] font-bold text-white">
+        <div className="pb-[3px] pl-2.5 font-bold text-white">
           {props.title} <span>{props.children}</span>
         </div>
         <div className="text-white">
@@ -274,6 +278,15 @@ export const List = observer(() => {
       </div>
     );
   };
+
+  const isDisabledSubmitButton = useCallback(
+    (errors: { [name: string]: any }, allowSubmit: boolean) => {
+      const isError = checkDisabledSubmitButton(errors);
+
+      return isError || allowSubmit === false;
+    },
+    []
+  );
 
   return (
     <div className="w-[90%] lg:px-8 xl:px-0 m-auto p-5">
@@ -353,7 +366,8 @@ export const List = observer(() => {
               {...column}
               columnMenu={ColumnMenu}
               headerCell={HeaderCell}
-              headerClassName="!bg-[#67a0f4]"
+              headerClassName="!bg-[#67a0f4] text-lg"
+              className="!p-4 text-base"
             />
           ))}
         </Grid>
@@ -382,7 +396,7 @@ export const List = observer(() => {
         <ModalCustom
           setVisible={setIsShowModalCreateUpdate}
           visible={isShowModalCreateUpdate}
-          modalTitle={user.id ? "New user" : "Update user"}
+          modalTitle={isUpdate ? "Update user" : "New user"}
           iconClass={user.id ? "fa fa-edit" : "fa fa-user-plus"}
           headerModalClass="text-blue-600"
         >
@@ -391,18 +405,20 @@ export const List = observer(() => {
             initialValues={user}
             key={JSON.stringify(user)}
             render={(formRenderProps) => {
-              const isError = checkDisabledSubmitButton(formRenderProps.errors);
+              const isError = isDisabledSubmitButton(
+                formRenderProps.errors,
+                formRenderProps.allowSubmit
+              );
+
               return (
                 <FormElement>
-                  <CreateOrUpdateForm />
+                  <CreateOrUpdateForm userId={user.id} />
                   <div className="space-x-4 border-t-2 pt-5 mt-5 flex justify-between">
                     <ButtonCustom
                       className="w-1/2"
-                      title={user ? "Update" : "Add"}
+                      title={isUpdate ? "Update" : "Add"}
                       themeColor="primary"
-                      disabled={
-                        isError || formRenderProps.allowSubmit === false
-                      }
+                      disabled={isError}
                       onClick={formRenderProps.onSubmit}
                     />
 

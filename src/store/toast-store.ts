@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { ToastItemProps } from "../components/toast/toast-item";
 
 export class ToastStore {
@@ -6,11 +6,6 @@ export class ToastStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    reaction(
-      () => this.toasts,
-      () => console.log(this.toasts)
-    );
   }
 
   onAddToast = (toast: ToastItemProps) => {

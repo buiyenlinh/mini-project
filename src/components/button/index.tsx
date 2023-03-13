@@ -16,6 +16,8 @@ export type ThemeColorButton =
   | "light"
   | "inverse";
 
+export type TypeButton = "submit" | "reset" | "button" | undefined;
+
 export interface ButtonCustomProps {
   disabled?: boolean;
   className?: string;
@@ -24,11 +26,13 @@ export interface ButtonCustomProps {
   iconLeftClass?: string;
   iconRightClass?: string;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  type?: TypeButton;
 }
 
 export const ButtonCustom = ({
   disabled,
   themeColor = "base",
+  type = "button",
   className,
   title,
   iconLeftClass,
@@ -41,6 +45,7 @@ export const ButtonCustom = ({
       themeColor={themeColor}
       disabled={disabled}
       onClick={onClick}
+      type={type}
     >
       {iconLeftClass && <i className={clsx("mr-2", iconLeftClass)} />}
 

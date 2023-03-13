@@ -46,6 +46,16 @@ export const userColumns: columnInterface[] = [
     title: "Address",
     width: "",
   },
+  {
+    field: "department",
+    title: "Department",
+    width: "",
+  },
+  {
+    field: "level",
+    title: "Level",
+    width: "",
+  },
 ];
 
 export const genders = [
@@ -64,4 +74,12 @@ export const departments: string[] = [
   "Human Resources",
   "IT",
   "Sales",
+];
+
+export const levels: string[] = [
+  "Level 1",
+  "Level 2",
+  "Level 3",
+  "Level 4",
+  "Level 5",
 ];

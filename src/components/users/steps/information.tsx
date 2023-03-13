@@ -14,6 +14,7 @@ export const Information = () => {
           component={InputError}
           label="Full name"
           validator={requiredValidator}
+          required
         />
       </div>
       <div className="mb-5">

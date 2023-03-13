@@ -2,7 +2,7 @@ import React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Stepper } from "@progress/kendo-react-layout";
-import { addUser, updateUser } from "../../mockapi/user-list";
+import { addUser, getUsers, updateUser } from "../../mockapi/user-list";
 import {
   Form,
   FormElement,
@@ -19,6 +19,7 @@ import LoadingPanel from "../loading";
 import { ButtonCustom } from "../button";
 import { checkDisabledSubmitButton } from "../../helper";
 import { ToastType } from "../toast/toast-item";
+import { Work } from "./steps/work";
 
 export type DetaiUserParams = {
   slug: string;
@@ -29,7 +30,7 @@ type Step = {
   isValid?: boolean;
 };
 
-const stepPages = [<Information />, <UserContact />];
+const stepPages = [<Information />, <UserContact />, <Work />];
 
 const CreateOrUpdateUser = () => {
   const { slug } = useParams<DetaiUserParams>();
@@ -37,8 +38,7 @@ const CreateOrUpdateUser = () => {
 
   const { userStore, toastStore } = useStore();
   const { onAddToast } = toastStore;
-  const { onAdd, onUpdate, onCreateId, getUserById, onExistEmailOrPhone } =
-    userStore;
+  const { onAdd, onUpdate, onCreateId, getUserById, onSetUsers } = userStore;
 
   const [user, setUser] = useState<User>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -53,9 +53,25 @@ const CreateOrUpdateUser = () => {
       label: "Contact",
       isValid: undefined,
     },
+    {
+      label: "Work",
+      isValid: undefined,
+    },
   ]);
 
   useEffect(() => {
+    getUsers()
+      .then((res) => {
+        onSetUsers(res);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
     const timeOut = setTimeout(() => {
       setIsLoading(false);
     }, 500);
@@ -63,7 +79,7 @@ const CreateOrUpdateUser = () => {
     return () => {
       clearTimeout(timeOut);
     };
-  }, []);
+  }, [onSetUsers]);
 
   const renderLoading = useMemo(() => {
     if (isLoading) return <LoadingPanel />;
@@ -148,30 +164,23 @@ const CreateOrUpdateUser = () => {
 
       if (isAllStepsValid) {
         const id = user.id ? user.id : onCreateId();
-        const userInfo = Object.assign(values, { id });
+        let userInfo = Object.assign(values, { id });
 
-        const errors = onExistEmailOrPhone(
-          values.email,
-          values.phoneNumber,
-          slug
-        );
-
-        if (errors.length > 0) {
-          errors.forEach((item) => {
-            handleAddToast(item, "error");
+        if (isNewUser) {
+          userInfo = Object.assign(userInfo, {
+            created_at: new Date(),
+            updated_at: new Date(),
           });
+          onAdd(userInfo);
+          addUser(userInfo);
         } else {
-          if (isNewUser) {
-            onAdd(userInfo);
-            addUser(userInfo);
-          } else {
-            onUpdate(userInfo);
-            updateUser(userInfo);
-          }
-
-          handleAddToast(isNewUser ? "User added" : "User updated", "success");
-          history.push("/");
+          userInfo = Object.assign(userInfo, { updated_at: new Date() });
+          onUpdate(userInfo);
+          updateUser(userInfo);
         }
+
+        handleAddToast(isNewUser ? "User added" : "User updated", "success");
+        history.push("/");
       }
     },
     [
@@ -180,10 +189,8 @@ const CreateOrUpdateUser = () => {
       currentStep,
       user.id,
       onCreateId,
-      onExistEmailOrPhone,
-      isNewUser,
-      slug,
       handleAddToast,
+      isNewUser,
       history,
       onAdd,
       onUpdate,
@@ -202,7 +209,6 @@ const CreateOrUpdateUser = () => {
       if (user && !isError) {
         isDisabled = false;
       }
-
       return isDisabled;
     },
     [user]
@@ -264,6 +270,7 @@ const CreateOrUpdateUser = () => {
                               }
                               disabled={isDisabled}
                               onClick={formRenderProps.onSubmit}
+                              type="submit"
                             />
                           </div>
                         </div>
