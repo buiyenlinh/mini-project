@@ -1,7 +1,7 @@
 import { Field } from "@progress/kendo-react-form";
 
 import { departments, levels } from "../../../const";
-import { InputDropDownList } from "../../input/input-select";
+import { InputDropDownList } from "../../input/input-dropdown-list";
 import { requiredValidator } from "../validate";
 
 export const Work = () => {

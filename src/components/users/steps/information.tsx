@@ -1,6 +1,6 @@
 import { Field } from "@progress/kendo-react-form";
 import InputError from "../../input/input-error";
-import FieldRadioGroup from "../../radio";
+import FieldRadioGroup from "../../field-radio-group";
 import { genders } from "../../../const";
 import { birthdayValidator, requiredValidator } from "../validate";
 import { InputDatePicker } from "../../input/input-date-picker";

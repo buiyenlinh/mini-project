@@ -6,6 +6,16 @@ const deleteItem = (arr: any[], itemId: string) => {
   return arr.filter((item) => item.id !== itemId);
 };
 
+// const getCount = (date: Date, arr: User[]) => {
+//   let count = 0;
+//   arr.forEach((item) => {
+//     if (item.created_at === date) {
+//       count++;
+//     }
+//   });
+//   return count;
+// };
+
 export class UserStore {
   users: User[] = [];
 

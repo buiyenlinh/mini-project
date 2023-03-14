@@ -1,11 +1,6 @@
 import { observer } from "mobx-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  addUser,
-  deleteUser,
-  getUsers,
-  updateUser,
-} from "../../mockapi/user-list";
+import { addUser, deleteUser, getUsers, updateUser } from "../../mockapi/user";
 import useStore from "../../store";
 import { getter, process } from "@progress/kendo-data-query";
 import {
@@ -20,7 +15,7 @@ import {
   GridPagerSettings,
   GridSelectionChangeEvent,
 } from "@progress/kendo-react-grid";
-import LoadingPanel from "../loading";
+import { Loading } from "../loading";
 import { ColumnMenu } from "../column-menu";
 import {
   userColumns,
@@ -30,10 +25,10 @@ import {
 import { User } from "../../interfaces/user";
 import { Link } from "react-router-dom";
 
-import { ModalCustom } from "../modals";
+import { ModalCustom } from "../modal-custom";
 import { CreateOrUpdateForm } from "./create-or-update-form";
 import { Form, FormElement } from "@progress/kendo-react-form";
-import { ButtonCustom } from "../button";
+import { ButtonCustom } from "../button-custom";
 import { ToastType } from "../toast/toast-item";
 import { checkDisabledSubmitButton } from "../../helper";
 
@@ -294,6 +289,11 @@ export const List = observer(() => {
     <div className="w-[90%] lg:px-8 xl:px-0 m-auto p-5">
       <div className="flex justify-end space-x-3 pt-3">
         <ButtonCustom
+          title="Clear filter"
+          onClick={() => setDataState(initialState)}
+        />
+
+        <ButtonCustom
           className="buttons-container-button"
           themeColor="primary"
           onClick={handleShowUserModal}
@@ -342,7 +342,7 @@ export const List = observer(() => {
         />
       </div>
       <div className="mt-5">
-        {isLoading && users.length === 0 && <LoadingPanel />}
+        {isLoading && users.length === 0 && <Loading />}
         <Grid
           style={{ height: "75vh", overflowX: "auto" }}
           data={newData}

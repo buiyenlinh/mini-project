@@ -1,4 +1,4 @@
-const LoadingPanel = () => {
+export const Loading = () => {
   return (
     <div className="k-loading-mask">
       <span className="k-loading-text">Loading</span>
@@ -7,5 +7,3 @@ const LoadingPanel = () => {
     </div>
   );
 };
-
-export default LoadingPanel;

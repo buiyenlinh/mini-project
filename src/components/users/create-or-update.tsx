@@ -2,7 +2,7 @@ import React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Stepper } from "@progress/kendo-react-layout";
-import { addUser, getUsers, updateUser } from "../../mockapi/user-list";
+import { addUser, getUsers, updateUser } from "../../mockapi/user";
 import "../../styles/create-or-update-user.css";
 import {
   Form,
@@ -14,10 +14,10 @@ import { Contact as UserContact } from "./steps/contact";
 import useStore from "../../store";
 import { observer } from "mobx-react";
 import NotFound from "../not-found";
-import { getUser } from "../../mockapi/user-list";
+import { getUser } from "../../mockapi/user";
 import { User } from "../../interfaces/user";
-import LoadingPanel from "../loading";
-import { ButtonCustom } from "../button";
+import { Loading } from "../loading";
+import { ButtonCustom } from "../button-custom";
 import { checkDisabledSubmitButton } from "../../helper";
 import { ToastType } from "../toast/toast-item";
 import { Work } from "./steps/work";
@@ -83,7 +83,7 @@ const CreateOrUpdateUser = () => {
   }, [onSetUsers]);
 
   const renderLoading = useMemo(() => {
-    if (isLoading) return <LoadingPanel />;
+    if (isLoading) return <Loading />;
     return <NotFound />;
   }, [isLoading]);
 
@@ -235,7 +235,7 @@ const CreateOrUpdateUser = () => {
               </h2>
 
               <div className="flex justify-between">
-                <div>
+                <div className="pt-5">
                   <Stepper
                     value={currentStep}
                     items={steps}

@@ -1,7 +1,7 @@
 import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import clsx from "clsx";
 import { PropsWithChildren } from "react";
-import { ButtonCustom, ButtonCustomProps } from "../button";
+import { ButtonCustom, ButtonCustomProps } from "../button-custom";
 
 interface ModalCustomProps {
   visible: boolean;
