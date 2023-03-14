@@ -291,7 +291,7 @@ export const List = observer(() => {
         <ButtonCustom
           title="Clear filter"
           onClick={() => setDataState(initialState)}
-          iconLeftClass="k-icon k-i-filter-clear text-[22px] pb-[2px]"
+          iconLeftClass="k-icon k-i-filter-clear !text-[22px] pb-[2px]"
         />
 
         <ButtonCustom
@@ -395,6 +395,7 @@ export const List = observer(() => {
             onClick: () => setIsVisibleConfirmModal(false),
             className: "w-1/2",
           }}
+          wrapperChildrenClass="p-2"
         >
           <div className="w-[300px]">Are you sure you want to continue?</div>
         </ModalCustom>
@@ -405,6 +406,7 @@ export const List = observer(() => {
           modalTitle={isUpdate ? "Update user" : "New user"}
           iconClass={user.id ? "fa fa-edit" : "fa fa-user-plus"}
           headerModalClass="text-blue-600"
+          wrapperChildrenClass="pr-2 pb-2"
         >
           <Form
             onSubmit={onAddOrUpdate}
@@ -419,7 +421,7 @@ export const List = observer(() => {
               return (
                 <FormElement>
                   <CreateOrUpdateForm userId={user.id} />
-                  <div className="space-x-4 border-t-2 pt-5 mt-5 flex justify-between">
+                  <div className="space-x-[22px] border-t-2 pt-5 ml-2 mt-5 flex justify-between">
                     <ButtonCustom
                       className="w-1/2"
                       title={isUpdate ? "Update" : "Add"}

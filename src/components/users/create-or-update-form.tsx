@@ -4,7 +4,7 @@ import { Work } from "./steps/work";
 
 export const CreateOrUpdateForm = ({ userId }: { userId?: string }) => {
   return (
-    <div className="w-[500px] h-[50vh] overflow-auto pr-2">
+    <div className="w-[500px] h-[50vh] overflow-auto px-2">
       <Information />
       <Contact userId={userId} />
       <Work />

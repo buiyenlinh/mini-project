@@ -12,6 +12,7 @@ interface ModalCustomProps {
   confirmBtn?: ButtonCustomProps;
   cancelBtn?: ButtonCustomProps;
   headerModalClass?: string;
+  wrapperChildrenClass?: string;
 }
 
 export const ModalCustom = ({
@@ -23,6 +24,7 @@ export const ModalCustom = ({
   confirmBtn,
   cancelBtn,
   headerModalClass,
+  wrapperChildrenClass,
 }: PropsWithChildren<ModalCustomProps>) => {
   const TitleBar = () => {
     return (
@@ -46,10 +48,10 @@ export const ModalCustom = ({
     <div>
       {visible && (
         <Dialog title={<TitleBar />} onClose={handleClose}>
-          <div className="px-2 pb-2">{children}</div>
+          <div className={wrapperChildrenClass}>{children}</div>
           {(confirmBtn || cancelBtn) && (
             <DialogActionsBar>
-              <div className="p-4 flex justify-between space-x-4">
+              <div className="p-4 flex justify-between space-x-[22px]">
                 {confirmBtn && <ButtonCustom {...confirmBtn} />}
                 {cancelBtn && <ButtonCustom {...cancelBtn} />}
               </div>
