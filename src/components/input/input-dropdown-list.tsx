@@ -1,7 +1,15 @@
-import { DropDownList } from "@progress/kendo-react-dropdowns";
+import {
+  CompositeFilterDescriptor,
+  filterBy,
+  FilterDescriptor,
+} from "@progress/kendo-data-query";
+import {
+  DropDownList,
+  DropDownListFilterChangeEvent,
+} from "@progress/kendo-react-dropdowns";
 import { FieldRenderProps, FieldWrapper } from "@progress/kendo-react-form";
 import { Label, Error } from "@progress/kendo-react-labels";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export const InputDropDownList = (fieldRenderProps: FieldRenderProps) => {
   const {
@@ -14,11 +22,31 @@ export const InputDropDownList = (fieldRenderProps: FieldRenderProps) => {
     errorId,
     optional,
     visited,
+    data,
     required,
     ...others
   } = fieldRenderProps;
 
   const editorRef = useRef<any>(null);
+  const timeout = useRef<any>(false);
+  const [dataState, setDataState] = useState({
+    data: data.slice(),
+    loading: false,
+  });
+
+  const filterData = (filter: FilterDescriptor | CompositeFilterDescriptor) => {
+    const newData = data.slice();
+    return filterBy(newData, filter);
+  };
+
+  const filterChange = (event: DropDownListFilterChangeEvent) => {
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      setDataState({ loading: false, data: filterData(event.filter) });
+    }, 500);
+
+    setDataState((prevState) => ({ ...prevState, loading: true }));
+  };
 
   return (
     <FieldWrapper style={wrapperStyle}>
@@ -36,6 +64,9 @@ export const InputDropDownList = (fieldRenderProps: FieldRenderProps) => {
         </span>
       </Label>
       <DropDownList
+        onFilterChange={filterChange}
+        data={dataState.data}
+        loading={dataState.loading}
         ref={editorRef}
         valid={valid}
         id={id}

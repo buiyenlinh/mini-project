@@ -2,7 +2,7 @@ import { Field } from "@progress/kendo-react-form";
 
 import { departments, levels } from "../../../const";
 import { InputDropDownList } from "../../input/input-dropdown-list";
-import { requiredValidator } from "../validate";
+import { dropDownSelectValidator } from "../validate";
 
 export const Work = () => {
   return (
@@ -14,7 +14,9 @@ export const Work = () => {
           label="Department"
           component={InputDropDownList}
           data={departments}
-          validator={requiredValidator}
+          textField="label"
+          filterable={true}
+          validator={dropDownSelectValidator}
           required
         />
       </div>
@@ -26,6 +28,8 @@ export const Work = () => {
           label="Level"
           component={InputDropDownList}
           data={levels}
+          textField="label"
+          filterable={true}
         />
       </div>
     </div>

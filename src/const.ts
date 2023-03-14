@@ -47,12 +47,12 @@ export const userColumns: columnInterface[] = [
     width: "",
   },
   {
-    field: "department",
+    field: "department.label",
     title: "Department",
     width: "",
   },
   {
-    field: "level",
+    field: "level.label",
     title: "Level",
     width: "",
   },
@@ -90,19 +90,44 @@ export const genders = [
   },
 ];
 
-export const departments: string[] = [
-  "Administration",
-  "Marketing",
-  "Purchasing",
-  "Human Resources",
-  "IT",
-  "Sales",
+export const departments = [
+  {
+    label: "Administration",
+    value: "administration",
+  },
+  {
+    label: "Marketing",
+    value: "marketing",
+  },
+  {
+    label: "Purchasing",
+    value: "purchasing",
+  },
+  {
+    label: "Puman Resources",
+    value: "human Resources",
+  },
+  {
+    label: "IT",
+    value: "IT",
+  },
 ];
 
-export const levels: string[] = [
-  "Level 1",
-  "Level 2",
-  "Level 3",
-  "Level 4",
-  "Level 5",
+export const levels = [
+  {
+    label: "Level 1",
+    value: "level 1",
+  },
+  {
+    label: "Level 2",
+    value: "level 2",
+  },
+  {
+    label: "Level 3",
+    value: "level 3",
+  },
+  {
+    label: "Level 4",
+    value: "level 4",
+  },
 ];

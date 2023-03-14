@@ -21,3 +21,10 @@ export const phoneNumberValidator = (value: string) => {
     ? ""
     : "Please enter a valid phone number.";
 };
+
+export const dropDownSelectValidator = (obj: {
+  value: string;
+  label: string;
+}) => {
+  return obj ? "" : "This field is required";
+};
