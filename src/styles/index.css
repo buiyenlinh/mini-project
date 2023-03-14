@@ -2,22 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .k-notification {
-  display: flex !important;
-} */
-
-/* .k-grid td.k-selected,
-.k-grid .k-table-row.k-selected > td,
-.k-grid .k-table-td.k-selected,
-.k-grid .k-table-row.k-selected > .k-table-td {
-  background-color: transparent !important;
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.k-window-actions {
-  margin: 0 !important;
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
 }
 
-.k-dialog-titlebar,
-.k-window-content.k-dialog-content {
-  background: #fff !important;
-} */
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(200, 203, 205);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8b8c8f;
+}

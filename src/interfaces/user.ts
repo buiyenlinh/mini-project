@@ -4,7 +4,10 @@ export interface User {
   birthday?: Date | null;
   gender?: string;
   address?: string;
-  email?: string;
+  email?: {
+    label: string;
+    value: string;
+  };
   phoneNumber?: string;
   department?: string;
   level?: string;
