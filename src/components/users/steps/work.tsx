@@ -14,10 +14,15 @@ export const Work = () => {
           label="Department"
           component={InputDropDownList}
           data={departments}
+          dataItemKey="value"
           textField="label"
           filterable={true}
           validator={dropDownSelectValidator}
           required
+          defaultItem={{
+            value: null,
+            label: "Select department...",
+          }}
         />
       </div>
 
@@ -28,8 +33,13 @@ export const Work = () => {
           label="Level"
           component={InputDropDownList}
           data={levels}
+          dataItemKey="value"
           textField="label"
           filterable={true}
+          defaultItem={{
+            value: null,
+            label: "Select level...",
+          }}
         />
       </div>
     </div>

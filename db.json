@@ -1,3 +1,289 @@
 {
-  "users": []
+  "users": [
+    {
+      "fullName": "Hoa Hong",
+      "gender": "Female",
+      "birthday": "2000-05-31T17:00:00.000Z",
+      "email": "hoahong@gmail.com",
+      "phoneNumber": "0987987987",
+      "address": "Chau Thanh - Hau Giang",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "c0fe129966028e9bea64824e5f6e34d3",
+      "created_at": "2023-03-14T14:05:43.484Z",
+      "updated_at": "2023-03-14T14:05:43.484Z"
+    },
+    {
+      "fullName": "Hoa Huong Duong",
+      "gender": "Female",
+      "birthday": "1995-01-31T17:00:00.000Z",
+      "email": "hoahuongduong@gmail.com",
+      "phoneNumber": "0987987986",
+      "address": "Ninh Kieu - Can Tho",
+      "department": {
+        "label": "Purchasing",
+        "value": "purchasing"
+      },
+      "level": {
+        "label": "Level 2",
+        "value": "level 2"
+      },
+      "id": "09024064342aee4ce800101bcc869b93",
+      "created_at": "2023-03-14T14:49:49.876Z",
+      "updated_at": "2023-03-14T14:49:49.876Z"
+    },
+    {
+      "fullName": "Hoa Cam Chuong",
+      "gender": "Male",
+      "birthday": "1994-12-31T17:00:00.000Z",
+      "email": "hoacamchuong@gmail.com",
+      "phoneNumber": "0987654321",
+      "address": "Quan 1 - Ho Chi Minh",
+      "department": {
+        "label": "IT",
+        "value": "IT"
+      },
+      "level": {
+        "label": "Level 2",
+        "value": "level 2"
+      },
+      "id": "648987288465346948c4c7925b95924a",
+      "created_at": "2023-03-14T14:51:44.687Z",
+      "updated_at": "2023-03-14T14:51:44.687Z"
+    },
+    {
+      "fullName": "Ly Cay Bong",
+      "gender": "Male",
+      "birthday": "1999-12-11T17:00:00.000Z",
+      "email": "lycaybong@gmail.com",
+      "phoneNumber": "0987654322",
+      "address": "Dong Thap",
+      "department": {
+        "label": "Purchasing",
+        "value": "purchasing"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "4cea0f2aa41dcf885a79c3cd195541ea",
+      "created_at": "2023-03-14T14:52:40.695Z",
+      "updated_at": "2023-03-14T14:52:40.695Z"
+    },
+    {
+      "fullName": "Hoa Luc Binh",
+      "gender": "Other",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "hoalucbinh@gmail.com",
+      "phoneNumber": "0987654323",
+      "address": "Long An",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a1524a1c05b9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T14:53:53.272Z"
+    },
+    {
+      "fullName": "Bong Cai Trang",
+      "gender": "Male",
+      "birthday": "1997-12-09T17:00:00.000Z",
+      "email": "bongcaitrang@gmail.com",
+      "phoneNumber": "0987654324",
+      "address": "Soc Trang",
+      "department": {
+        "label": "Marketing",
+        "value": "marketing"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a1522sd345b9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:06:42.804Z"
+    },
+    {
+      "fullName": "Banh Bong Lan",
+      "gender": "Female",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "banhbonglan@gmail.com",
+      "phoneNumber": "0987654325",
+      "address": "Long An",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a152sd23er5b9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T14:53:53.272Z"
+    },
+    {
+      "fullName": "Banh Trung Thu",
+      "gender": "Male",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "banhtrungthu@gmail.com",
+      "phoneNumber": "0987654326",
+      "address": "CHau Thanh A - Hau Giang",
+      "department": {
+        "label": "Puman Resources",
+        "value": "human Resources"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "36390964b96dwesdseea1c05b9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:06:51.610Z"
+    },
+    {
+      "fullName": "Banh Trang Nuong",
+      "gender": "Male",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "banhtrangnuong@gmail.com",
+      "phoneNumber": "09876543266",
+      "address": "Long An",
+      "department": {
+        "label": "Marketing",
+        "value": "marketing"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "36390964b96d3a1524a1c05232320fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:06:28.161Z"
+    },
+    {
+      "fullName": "Banh Trang Tron",
+      "gender": "Other",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "banhtrangtron@gmail.com",
+      "phoneNumber": "0987654328",
+      "address": "Long An",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a152323c05b9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T14:53:53.272Z"
+    },
+    {
+      "fullName": "Keo Dau Phong",
+      "gender": "Male",
+      "birthday": "1999-03-09T17:00:00.000Z",
+      "email": "keodauphong@gmail.com",
+      "phoneNumber": "0987654329",
+      "address": "Long An",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a152wrgfgfgb9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:05:28.839Z"
+    },
+    {
+      "fullName": "Keo Dua Ben Tre",
+      "gender": "Male",
+      "birthday": "2000-01-20T17:00:00.000Z",
+      "email": "keoduabentre@gmail.com",
+      "phoneNumber": "0987654331",
+      "address": "Hau Giang",
+      "department": {
+        "label": "Puman Resources",
+        "value": "human Resources"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "36390964b96d3sdsd24a1ssdsddb9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:04:54.778Z"
+    },
+    {
+      "fullName": "Banh Mi Cha Lua",
+      "gender": "Male",
+      "birthday": "1999-11-30T17:00:00.000Z",
+      "email": "banhmichalua@gmail.com",
+      "phoneNumber": "0987654332",
+      "address": "Long An",
+      "department": {
+        "label": "IT",
+        "value": "IT"
+      },
+      "level": {
+        "label": "Level 4",
+        "value": "level 4"
+      },
+      "id": "36390964b96d3a1524awjjjb9b0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:07:16.408Z"
+    },
+    {
+      "fullName": "Banh Canh Ngot",
+      "gender": "Female",
+      "birthday": "2000-01-10T17:00:00.000Z",
+      "email": "banhcanhngot@gmail.com",
+      "phoneNumber": "09876543234",
+      "address": "Ca Mau",
+      "department": {
+        "label": "Administration",
+        "value": "administration"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "36390964b96d3a15qwqwqw0fe14b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:05:14.758Z"
+    },
+    {
+      "fullName": "Banh Xeo",
+      "gender": "Female",
+      "birthday": "1999-10-06T17:00:00.000Z",
+      "email": "banhxeo@gmail.com",
+      "phoneNumber": "09876543223",
+      "address": "Can Tho",
+      "department": {
+        "label": "IT",
+        "value": "IT"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "36390964b96d3a15qwqwqw232334b",
+      "created_at": "2023-03-14T14:53:53.272Z",
+      "updated_at": "2023-03-14T15:11:05.197Z"
+    }
+  ]
 }

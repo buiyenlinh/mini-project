@@ -89,14 +89,22 @@ const CreateOrUpdateUser = () => {
 
   useEffect(() => {
     getUser(slug).then((res) => {
-      setUser(res);
+      setUser({
+        ...res,
+        birthday: res.birthday ? new Date(res.birthday) : res.birthday,
+      });
     });
   }, [slug]);
 
   useEffect(() => {
     const userInfo = getUserById(slug);
     if (userInfo) {
-      setUser(userInfo);
+      setUser({
+        ...userInfo,
+        birthday: userInfo.birthday
+          ? new Date(userInfo.birthday)
+          : userInfo.birthday,
+      });
     }
   }, [getUserById, slug]);
 

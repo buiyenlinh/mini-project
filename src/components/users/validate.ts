@@ -26,5 +26,5 @@ export const dropDownSelectValidator = (obj: {
   value: string;
   label: string;
 }) => {
-  return obj ? "" : "This field is required";
+  return obj?.value ? "" : "This field is required";
 };

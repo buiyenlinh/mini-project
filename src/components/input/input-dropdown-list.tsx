@@ -64,13 +64,13 @@ export const InputDropDownList = (fieldRenderProps: FieldRenderProps) => {
         </span>
       </Label>
       <DropDownList
-        onFilterChange={filterChange}
+        id={id}
+        valid={valid}
+        ref={editorRef}
+        required={required}
         data={dataState.data}
         loading={dataState.loading}
-        ref={editorRef}
-        valid={valid}
-        id={id}
-        required={required}
+        onFilterChange={filterChange}
         {...others}
       />
 

@@ -3,6 +3,11 @@
   height: 100px;
 }
 
+.k-stepper .k-step.k-focus .k-step-indicator::after,
+.k-stepper .k-step-link:focus .k-step-indicator::after {
+  margin: 1px;
+}
+
 /* list */
 /* Icon column menu */
 .k-grid-header-menu.k-grid-column-menu:focus {

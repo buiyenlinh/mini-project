@@ -4,7 +4,7 @@ export const isEmailValidator = (value: string) => {
 };
 
 export const isPhoneNumberValidator = (value: string) => {
-  const phoneRegex: RegExp = new RegExp(/(84|0[3|5|7|8|9])+([0-9]{8,9})\b/);
+  const phoneRegex: RegExp = new RegExp("^84|0[35789][0-9]{8,9}$");
   return phoneRegex.test(value);
 };
 

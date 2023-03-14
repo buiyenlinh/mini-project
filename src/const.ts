@@ -27,7 +27,7 @@ export const userColumns: columnInterface[] = [
     filter: "date",
   },
   {
-    field: "gender.label",
+    field: "gender",
     title: "Gender",
     width: "",
   },
@@ -75,18 +75,15 @@ export const userColumns: columnInterface[] = [
 export const genders = [
   {
     label: "Female",
-    value: {
-      label: "Female",
-      value: "female",
-    },
+    value: "Female",
   },
   {
     label: "Male",
-    value: { label: "Male", value: "male" },
+    value: "Male",
   },
   {
     label: "Other",
-    value: { label: "Other", value: "other" },
+    value: "Other",
   },
 ];
 
