@@ -38,7 +38,7 @@ export const userColumns: columnInterface[] = [
   },
   {
     field: "phoneNumber",
-    title: "Phone Number",
+    title: "Phone number",
     width: "",
   },
   {

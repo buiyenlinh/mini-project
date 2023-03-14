@@ -291,6 +291,7 @@ export const List = observer(() => {
         <ButtonCustom
           title="Clear filter"
           onClick={() => setDataState(initialState)}
+          iconLeftClass="k-icon k-i-filter-clear text-[22px] pb-[2px]"
         />
 
         <ButtonCustom
