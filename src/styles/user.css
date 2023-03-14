@@ -1,0 +1,10 @@
+/* create - update page */
+.k-step {
+  height: 100px;
+}
+
+/* list */
+/* Icon column menu */
+.k-grid-header-menu.k-grid-column-menu:focus {
+  box-shadow: none !important;
+}

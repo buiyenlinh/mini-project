@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Stepper } from "@progress/kendo-react-layout";
 import { addUser, getUsers, updateUser } from "../../mockapi/user";
-import "../../styles/create-or-update-user.css";
+import "../../styles/user.css";
 import {
   Form,
   FormElement,
