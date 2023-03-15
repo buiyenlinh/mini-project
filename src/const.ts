@@ -60,14 +60,14 @@ export const userColumns: columnInterface[] = [
     field: "created_at",
     title: "Created at",
     width: "",
-    format: "{0:HH:mm dd/MM/yyyy}",
+    format: "{0:dd/MM/yyyy HH:mm}",
     filter: "date",
   },
   {
     field: "updated_at",
     title: "Updated at",
     width: "",
-    format: "{0:HH:mm dd/MM/yyyy}",
+    format: "{0:dd/MM/yyyy HH:mm}",
     filter: "date",
   },
 ];
