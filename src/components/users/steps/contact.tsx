@@ -13,7 +13,7 @@ import {
 export const Contact = ({ userId }: { userId?: string }) => {
   const { slug } = useParams<DetaiUserParams>();
   const { userStore } = useStore();
-  const { onExistEmailOrPhone } = userStore;
+  const { checkExistEmailOrPhone } = userStore;
 
   const getId = useMemo(() => {
     let id = slug !== "new" ? slug : undefined;
@@ -27,14 +27,14 @@ export const Contact = ({ userId }: { userId?: string }) => {
     value = value && value.trim();
     const validString = phoneNumberValidator(value);
 
-    const errorExist = onExistEmailOrPhone(undefined, value, getId);
+    const errorExist = checkExistEmailOrPhone(undefined, value, getId);
     return validString || errorExist[0];
   };
 
   const onEmailValidator = (value: string) => {
     value = value && value.trim();
     const validString = emailValidator(value);
-    const errorExist = onExistEmailOrPhone(value, undefined, getId);
+    const errorExist = checkExistEmailOrPhone(value, undefined, getId);
     return validString || errorExist[0];
   };
 

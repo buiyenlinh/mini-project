@@ -38,8 +38,14 @@ export const CreateOrUpdate = observer(() => {
   const history = useHistory();
 
   const { userStore, toastStore } = useStore();
-  const { onAddToast } = toastStore;
-  const { onAdd, onUpdate, onCreateId, getUserById, onSetUsers } = userStore;
+  const { addToastState } = toastStore;
+  const {
+    addUserState,
+    updateUserState,
+    createUserId,
+    getUserStateById,
+    setUsersState,
+  } = userStore;
 
   const [user, setUser] = useState<User>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -63,7 +69,7 @@ export const CreateOrUpdate = observer(() => {
   useEffect(() => {
     getUsers()
       .then((res) => {
-        onSetUsers(res);
+        setUsersState(res);
       })
       .catch((error) => {
         console.log(error);
@@ -80,7 +86,7 @@ export const CreateOrUpdate = observer(() => {
     return () => {
       clearTimeout(timeOut);
     };
-  }, [onSetUsers]);
+  }, [setUsersState]);
 
   const renderLoading = useMemo(() => {
     if (isLoading) return <Loading />;
@@ -97,7 +103,7 @@ export const CreateOrUpdate = observer(() => {
   }, [slug]);
 
   useEffect(() => {
-    const userInfo = getUserById(slug);
+    const userInfo = getUserStateById(slug);
     if (userInfo) {
       setUser({
         ...userInfo,
@@ -106,7 +112,7 @@ export const CreateOrUpdate = observer(() => {
           : userInfo.birthday,
       });
     }
-  }, [getUserById, slug]);
+  }, [getUserStateById, slug]);
 
   const handleGoBack = () => {
     history.goBack();
@@ -126,13 +132,13 @@ export const CreateOrUpdate = observer(() => {
 
   const handleAddToast = useCallback(
     (content: string, type: ToastType) => {
-      onAddToast({
+      addToastState({
         id: new Date(),
         content: content,
         type: type,
       });
     },
-    [onAddToast]
+    [addToastState]
   );
 
   const isLastStep = useMemo(() => {
@@ -172,7 +178,7 @@ export const CreateOrUpdate = observer(() => {
       setCurrentStep(() => Math.min(currentStep + 1, steps.length - 1));
 
       if (isAllStepsValid) {
-        const id = user.id ? user.id : onCreateId();
+        const id = user.id ? user.id : createUserId();
         let userInfo = Object.assign(values, { id });
 
         if (isNewUser) {
@@ -180,11 +186,11 @@ export const CreateOrUpdate = observer(() => {
             created_at: new Date(),
             updated_at: new Date(),
           });
-          onAdd(userInfo);
+          addUserState(userInfo);
           addUser(userInfo);
         } else {
           userInfo = Object.assign(userInfo, { updated_at: new Date() });
-          onUpdate(userInfo);
+          updateUserState(userInfo);
           updateUser(userInfo);
         }
 
@@ -197,12 +203,12 @@ export const CreateOrUpdate = observer(() => {
       isAllStepsValid,
       currentStep,
       user.id,
-      onCreateId,
+      createUserId,
       handleAddToast,
       isNewUser,
       history,
-      onAdd,
-      onUpdate,
+      addUserState,
+      updateUserState,
     ]
   );
 

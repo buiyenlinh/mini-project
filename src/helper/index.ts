@@ -1,5 +1,7 @@
 export const isEmailValidator = (value: string) => {
-  const emailRegex: RegExp = new RegExp(/\S+@\S+\.\S+/);
+  const emailRegex: RegExp = new RegExp(
+    "^[A-Za-z][A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9-]+.[A-Za-z]{2,3}$"
+  );
   return emailRegex.test(value);
 };
 

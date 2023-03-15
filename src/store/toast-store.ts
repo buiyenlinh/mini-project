@@ -8,13 +8,13 @@ export class ToastStore {
     makeAutoObservable(this);
   }
 
-  onAddToast = (toast: ToastItemProps) => {
+  addToastState = (toast: ToastItemProps) => {
     runInAction(() => {
       this.toasts = this.toasts.concat(toast);
     });
   };
 
-  onDeleteToast = (toastId: Date) => {
+  deleteToastState = (toastId: Date) => {
     runInAction(() => {
       this.toasts = this.toasts.filter((item) => item.id !== toastId);
     });

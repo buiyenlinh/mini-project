@@ -67,14 +67,14 @@ export const List = observer(() => {
   const { userStore, toastStore } = useStore();
   const {
     users,
-    onSetUsers,
-    onDelete,
-    onUpdate,
-    getUserById,
-    onCreateId,
-    onAdd,
+    setUsersState,
+    deleteUserState,
+    updateUserState,
+    getUserStateById,
+    createUserId,
+    addUserState,
   } = userStore;
-  const { onAddToast } = toastStore;
+  const { addToastState } = toastStore;
 
   const [dataState, setDataState] = useState<DataState>(initialState);
   const [data, setData] = useState<User[]>([]);
@@ -104,7 +104,7 @@ export const List = observer(() => {
     const timeOut = setTimeout(() => {
       getUsers()
         .then((res) => {
-          onSetUsers(res);
+          setUsersState(res);
         })
         .catch((error) => {
           console.log(error);
@@ -118,7 +118,7 @@ export const List = observer(() => {
     return () => {
       clearTimeout(timeOut);
     };
-  }, [onSetUsers]);
+  }, [setUsersState]);
 
   useEffect(() => {
     const newData = users.map((user) => {
@@ -209,17 +209,17 @@ export const List = observer(() => {
 
   const handleAddToast = useCallback(
     (content: string, type: ToastType) => {
-      onAddToast({
+      addToastState({
         id: new Date(),
         content: content,
         type: type,
       });
     },
-    [onAddToast]
+    [addToastState]
   );
 
   const handleDeleteUser = () => {
-    onDelete(userIds);
+    deleteUserState(userIds);
     deleteUser(userIds);
     const toastTitle = userIds.length > 1 ? "Users deleted" : "User deleted";
     handleAddToast(toastTitle, "success");
@@ -229,12 +229,12 @@ export const List = observer(() => {
 
   const onAddOrUpdate = useCallback(
     (dataItem: { [name: string]: any }) => {
-      const id = user.id ? user.id : onCreateId();
+      const id = user.id ? user.id : createUserId();
       dataItem = Object.assign(dataItem, { id });
 
       if (user.id) {
         dataItem = Object.assign(dataItem, { updated_at: new Date() });
-        onUpdate(dataItem);
+        updateUserState(dataItem);
         updateUser(dataItem);
         resetUserSelect();
       } else {
@@ -242,18 +242,18 @@ export const List = observer(() => {
           created_at: new Date(),
           updated_at: new Date(),
         });
-        onAdd(dataItem);
+        addUserState(dataItem);
         addUser(dataItem);
       }
       const toastTitle = user.id ? "User updated" : "User added";
       handleAddToast(toastTitle, "success");
       setIsShowModalCreateUpdate(false);
     },
-    [handleAddToast, onAdd, onCreateId, onUpdate, user.id]
+    [handleAddToast, addUserState, createUserId, updateUserState, user.id]
   );
 
   const getUserUpdate = () => {
-    const userInfo = getUserById(userIds[0]);
+    const userInfo = getUserStateById(userIds[0]);
     if (userInfo) {
       setUser(userInfo);
     }

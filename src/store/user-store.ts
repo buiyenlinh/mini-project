@@ -17,13 +17,13 @@ export class UserStore {
     return this._users;
   }
 
-  onAdd = (user: User) => {
+  addUserState = (user: User) => {
     runInAction(() => {
       this._users = [user, ...this._users];
     });
   };
 
-  onUpdate = (user: User) => {
+  updateUserState = (user: User) => {
     runInAction(() => {
       const newList = this._users.map((item) => {
         if (item.id === user.id) item = user;
@@ -34,7 +34,7 @@ export class UserStore {
     });
   };
 
-  onDelete = (userIds: string[]) => {
+  deleteUserState = (userIds: string[]) => {
     runInAction(() => {
       userIds.forEach((item) => {
         this._users = deleteItem(this._users, item);
@@ -42,22 +42,22 @@ export class UserStore {
     });
   };
 
-  onSetUsers = (users: User[]) => {
+  setUsersState = (users: User[]) => {
     runInAction(() => {
       this._users = users;
     });
   };
 
-  getUserById = (userId: string) => {
+  getUserStateById = (userId: string) => {
     return this._users.find((user) => user.id === userId);
   };
 
-  onCreateId = () => {
+  createUserId = () => {
     const now = new Date();
     return md5(now.getTime().toString());
   };
 
-  onExistEmailOrPhone = (email?: string, phone?: string, id?: string) => {
+  checkExistEmailOrPhone = (email?: string, phone?: string, id?: string) => {
     const errors = [];
     const existEmail = this._users.find(
       (user) => user.email === email && user.id !== id

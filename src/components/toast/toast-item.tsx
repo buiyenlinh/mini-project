@@ -18,24 +18,24 @@ export interface ToastItemProps {
 
 export const ToastItem = ({ id, content, type }: ToastItemProps) => {
   const { toastStore } = useStore();
-  const { onDeleteToast } = toastStore;
+  const { deleteToastState } = toastStore;
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      onDeleteToast(id);
+      deleteToastState(id);
     }, 5000);
 
     return () => {
       clearTimeout(timeOut);
     };
-  }, [id, onDeleteToast]);
+  }, [id, deleteToastState]);
 
   return (
     <Fade>
       <Notification
         type={{ style: type, icon: true }}
         closable={true}
-        onClose={() => onDeleteToast(id)}
+        onClose={() => deleteToastState(id)}
         className="px-3.5 py-2.5"
       >
         <div>
