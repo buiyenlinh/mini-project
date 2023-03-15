@@ -13,7 +13,7 @@ import { Information } from "./steps/information";
 import { Contact as UserContact } from "./steps/contact";
 import useStore from "../../store";
 import { observer } from "mobx-react";
-import NotFound from "../not-found";
+import { NotFound } from "../not-found";
 import { getUser } from "../../mockapi/user";
 import { User } from "../../interfaces/user";
 import { Loading } from "../loading";
@@ -33,7 +33,7 @@ type Step = {
 
 const stepPages = [<Information />, <UserContact />, <Work />];
 
-const CreateOrUpdateUser = () => {
+export const CreateOrUpdate = observer(() => {
   const { slug } = useParams<DetaiUserParams>();
   const history = useHistory();
 
@@ -305,6 +305,4 @@ const CreateOrUpdateUser = () => {
       )}
     </>
   );
-};
-
-export default observer(CreateOrUpdateUser);
+});

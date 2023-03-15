@@ -1,4 +1,4 @@
-const Header = () => {
+export const Header = () => {
   return (
     <div className="border-b-2 py-3">
       <div className="w-[90%] m-auto">
@@ -10,5 +10,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;

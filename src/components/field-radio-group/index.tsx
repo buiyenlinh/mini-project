@@ -2,7 +2,7 @@ import { FieldRenderProps, FieldWrapper } from "@progress/kendo-react-form";
 import { RadioGroup } from "@progress/kendo-react-inputs";
 import { Label } from "@progress/kendo-react-labels";
 
-const FieldRadioGroup = (fieldRenderProps: FieldRenderProps) => {
+export const FieldRadioGroup = (fieldRenderProps: FieldRenderProps) => {
   const { id, label, valid, disabled, ...others } = fieldRenderProps;
   return (
     <FieldWrapper>
@@ -18,5 +18,3 @@ const FieldRadioGroup = (fieldRenderProps: FieldRenderProps) => {
     </FieldWrapper>
   );
 };
-
-export default FieldRadioGroup;

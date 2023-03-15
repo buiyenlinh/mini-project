@@ -16,7 +16,7 @@ export interface ToastItemProps {
   type: ToastType;
 }
 
-const ToastItem = ({ id, content, type }: ToastItemProps) => {
+export const ToastItem = ({ id, content, type }: ToastItemProps) => {
   const { toastStore } = useStore();
   const { onDeleteToast } = toastStore;
 
@@ -45,5 +45,3 @@ const ToastItem = ({ id, content, type }: ToastItemProps) => {
     </Fade>
   );
 };
-
-export default ToastItem;

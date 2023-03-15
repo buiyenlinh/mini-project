@@ -1,7 +1,7 @@
 import { Button } from "@progress/kendo-react-buttons";
 import { Link } from "react-router-dom";
 
-const NotFound = () => {
+export const NotFound = () => {
   return (
     <div className="w-[95vw] h-[90vh] m-auto">
       <div className="flex justify-center items-center h-full">
@@ -19,5 +19,3 @@ const NotFound = () => {
     </div>
   );
 };
-
-export default NotFound;

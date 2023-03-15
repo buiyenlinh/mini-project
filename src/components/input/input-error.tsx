@@ -2,7 +2,7 @@ import { FieldRenderProps, FieldWrapper } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
 import { Error, Label } from "@progress/kendo-react-labels";
 
-const InputError = (fieldRenderProps: FieldRenderProps) => {
+export const InputError = (fieldRenderProps: FieldRenderProps) => {
   const {
     validationMessage,
     visited,
@@ -35,5 +35,3 @@ const InputError = (fieldRenderProps: FieldRenderProps) => {
     </FieldWrapper>
   );
 };
-
-export default InputError;

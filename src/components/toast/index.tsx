@@ -1,10 +1,10 @@
 import { NotificationGroup } from "@progress/kendo-react-notification";
-import ToastItem, { ToastItemProps } from "./toast-item";
+import { ToastItem, ToastItemProps } from "./toast-item";
 
 export interface ToastProps {
   toastList: ToastItemProps[];
 }
-const Toast = ({ toastList }: ToastProps) => {
+export const Toast = ({ toastList }: ToastProps) => {
   return (
     <NotificationGroup
       style={{
@@ -20,5 +20,3 @@ const Toast = ({ toastList }: ToastProps) => {
     </NotificationGroup>
   );
 };
-
-export default Toast;

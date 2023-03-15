@@ -6,57 +6,50 @@ const deleteItem = (arr: any[], itemId: string) => {
   return arr.filter((item) => item.id !== itemId);
 };
 
-// const getCount = (date: Date, arr: User[]) => {
-//   let count = 0;
-//   arr.forEach((item) => {
-//     if (item.created_at === date) {
-//       count++;
-//     }
-//   });
-//   return count;
-// };
-
 export class UserStore {
-  users: User[] = [];
+  private _users: User[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
+  get users() {
+    return this._users;
+  }
+
   onAdd = (user: User) => {
-    console.log("user", user);
     runInAction(() => {
-      this.users = [user, ...this.users];
+      this._users = [user, ...this._users];
     });
   };
 
   onUpdate = (user: User) => {
     runInAction(() => {
-      const newList = this.users.map((item) => {
+      const newList = this._users.map((item) => {
         if (item.id === user.id) item = user;
         return item;
       });
 
-      this.users = newList;
+      this._users = newList;
     });
   };
 
   onDelete = (userIds: string[]) => {
     runInAction(() => {
       userIds.forEach((item) => {
-        this.users = deleteItem(this.users, item);
+        this._users = deleteItem(this._users, item);
       });
     });
   };
 
   onSetUsers = (users: User[]) => {
     runInAction(() => {
-      this.users = users;
+      this._users = users;
     });
   };
 
   getUserById = (userId: string) => {
-    return this.users.find((user) => user.id === userId);
+    return this._users.find((user) => user.id === userId);
   };
 
   onCreateId = () => {
@@ -66,10 +59,10 @@ export class UserStore {
 
   onExistEmailOrPhone = (email?: string, phone?: string, id?: string) => {
     const errors = [];
-    const existEmail = this.users.find(
+    const existEmail = this._users.find(
       (user) => user.email === email && user.id !== id
     );
-    const existPhone = this.users.find(
+    const existPhone = this._users.find(
       (user) => user.phoneNumber === phone && user.id !== id
     );
     if (existEmail) {

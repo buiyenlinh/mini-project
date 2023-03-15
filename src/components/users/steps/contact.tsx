@@ -2,7 +2,7 @@ import { Field } from "@progress/kendo-react-form";
 import { useMemo } from "react";
 import { useParams } from "react-router";
 import useStore from "../../../store";
-import InputError from "../../input/input-error";
+import { InputError } from "../../input/input-error";
 import { DetaiUserParams } from "../create-or-update";
 import {
   emailValidator,
