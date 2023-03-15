@@ -40,7 +40,7 @@ interface DataState {
 }
 
 let initialState = {
-  take: 5,
+  take: 20,
   skip: 0,
   sortable: true,
   resizable: true,
@@ -57,7 +57,7 @@ const pageable: GridPagerSettings = {
   buttonCount: 5,
   info: true,
   type: "numeric",
-  pageSizes: true,
+  pageSizes: [10, 20, 30],
   previousNext: true,
 };
 
@@ -94,6 +94,10 @@ export const List = observer(() => {
       setWindowWidth(innerWidth);
     });
   }, []);
+
+  useEffect(() => {
+    if (innerWidth !== windowWidth) setWindowWidth(innerWidth);
+  }, [innerWidth, windowWidth]);
 
   useEffect(() => {
     setIsLoading(true);

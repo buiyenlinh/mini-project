@@ -284,6 +284,158 @@
       "id": "36390964b96d3a15qwqwqw232334b",
       "created_at": "2023-03-14T14:53:53.272Z",
       "updated_at": "2023-03-14T15:11:05.197Z"
+    },
+    {
+      "fullName": "Banh Canh Man",
+      "gender": "Male",
+      "birthday": "1995-02-16T17:00:00.000Z",
+      "email": "banhcanhman@gmail.com",
+      "phoneNumber": "09873464737",
+      "address": "Ninh Kieu - Can Tho",
+      "department": {
+        "label": "Marketing",
+        "value": "marketing"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "b98e6cbdddf42cd8607cb7b9ccb2197a",
+      "created_at": "2023-03-15T01:07:33.774Z",
+      "updated_at": "2023-03-15T01:07:33.774Z"
+    },
+    {
+      "fullName": "Banh Mi Nuong",
+      "gender": "Male",
+      "birthday": "1995-02-16T17:00:00.000Z",
+      "email": "banhminuong@gmail.com",
+      "phoneNumber": "09873464737",
+      "address": "Long An",
+      "department": {
+        "label": "Marketing",
+        "value": "marketing"
+      },
+      "level": {
+        "label": "Level 2",
+        "value": "level 2"
+      },
+      "id": "b98e6cbsdsdsw34d8607cb7b9ccb2197a",
+      "created_at": "2023-03-15T01:07:33.774Z",
+      "updated_at": "2023-03-15T01:07:33.774Z"
+    },
+    {
+      "fullName": "Hoa Hong Trang",
+      "gender": "Female",
+      "birthday": "1997-03-26T17:00:00.000Z",
+      "email": "hoahongtrang@gmail.com",
+      "phoneNumber": "09873464735",
+      "address": "Can Tho",
+      "department": {
+        "label": "IT",
+        "value": "IT"
+      },
+      "level": {
+        "label": "Level 2",
+        "value": "level 2"
+      },
+      "id": "0f44a3b71281099e9552d0fab62868f1",
+      "created_at": "2023-03-15T01:47:46.736Z",
+      "updated_at": "2023-03-15T01:47:46.736Z"
+    },
+    {
+      "fullName": "Hoa Hong Den",
+      "gender": "Male",
+      "birthday": "1998-03-11T17:00:00.000Z",
+      "email": "hoahongden@gmail.com",
+      "phoneNumber": "0981238761",
+      "address": "Hau Giang",
+      "department": {
+        "label": "Puman Resources",
+        "value": "human Resources"
+      },
+      "level": {
+        "label": "Level 4",
+        "value": "level 4"
+      },
+      "id": "581775497388f6f454756aa13b8f3322",
+      "created_at": "2023-03-15T01:48:46.270Z",
+      "updated_at": "2023-03-15T01:48:46.270Z"
+    },
+    {
+      "fullName": "Hoa Mau Don",
+      "gender": "Female",
+      "birthday": "1998-07-20T17:00:00.000Z",
+      "email": "hoamaudon@gmail.com",
+      "phoneNumber": "07123456785",
+      "address": "Long An",
+      "department": {
+        "label": "Purchasing",
+        "value": "purchasing"
+      },
+      "level": {
+        "label": "Level 2",
+        "value": "level 2"
+      },
+      "id": "5484cecd8a22e44311fed3bfdf587868",
+      "created_at": "2023-03-15T01:49:45.985Z",
+      "updated_at": "2023-03-15T01:49:45.985Z"
+    },
+    {
+      "fullName": "Hoa Muoi Gio",
+      "gender": "Female",
+      "birthday": "1998-07-20T17:00:00.000Z",
+      "email": "hoamuoigio@gmail.com",
+      "phoneNumber": "07123456783",
+      "address": "Tra Vinh",
+      "department": {
+        "label": "Purchasing",
+        "value": "purchasing"
+      },
+      "level": {
+        "label": "Level 3",
+        "value": "level 3"
+      },
+      "id": "5484cecd8a22e44311asas23445fffg587868",
+      "created_at": "2023-03-15T01:49:45.985Z",
+      "updated_at": "2023-03-15T01:53:32.808Z"
+    },
+    {
+      "fullName": "Hoa Loa Ken",
+      "gender": "Male",
+      "birthday": "1998-03-04T17:00:00.000Z",
+      "email": "hoaloaken@gmail.com",
+      "phoneNumber": "07119876786",
+      "address": "Tra Vinh",
+      "department": {
+        "label": "IT",
+        "value": "IT"
+      },
+      "level": {
+        "label": "Level 4",
+        "value": "level 4"
+      },
+      "id": "5484cecd8a2ssdsd123121asas23445fffg587868",
+      "created_at": "2023-03-15T01:49:45.985Z",
+      "updated_at": "2023-03-15T01:54:17.345Z"
+    },
+    {
+      "fullName": "Hoa Thien Dieu",
+      "gender": "Female",
+      "birthday": "1998-07-20T17:00:00.000Z",
+      "email": "hoathiendieu@gmail.com",
+      "phoneNumber": "07123236789",
+      "address": "Bac Lieu",
+      "department": {
+        "label": "Purchasing",
+        "value": "purchasing"
+      },
+      "level": {
+        "label": "Level 1",
+        "value": "level 1"
+      },
+      "id": "5484ce1212e44311fed3bfdf587868",
+      "created_at": "2023-03-15T01:49:45.985Z",
+      "updated_at": "2023-03-15T01:54:47.848Z"
     }
   ]
 }
