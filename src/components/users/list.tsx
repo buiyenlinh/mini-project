@@ -270,7 +270,7 @@ export const List = observer(() => {
   const HeaderCell = (props: GridHeaderCellProps) => {
     return (
       <div>
-        <div className="pb-[3px] pl-2.5 font-bold text-white">
+        <div className="pb-[3px] pl-2.5 font-semibold text-white">
           {props.title} <span>{props.children}</span>
         </div>
         <div className="text-white">
@@ -377,7 +377,7 @@ export const List = observer(() => {
               headerCell={HeaderCell}
               headerClassName="!bg-[#67a0f4] text-lg"
               className="!p-4 text-base "
-              width={windowWidth > 1536 ? column.width : "200px"}
+              width={windowWidth > 1536 ? column.width : "220px"}
             />
           ))}
         </Grid>
