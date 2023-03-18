@@ -356,6 +356,7 @@ export const List = observer(() => {
           onDataStateChange={onDataStateChange}
           onSelectionChange={onSelectionChange}
           onHeaderSelectionChange={onHeaderSelectionChange}
+          rowHeight={70}
         >
           <GridNoRecords>
             <div className="absolute left-1/2 -translate-x-1/2">

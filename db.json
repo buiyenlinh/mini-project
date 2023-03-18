@@ -417,25 +417,6 @@
       "id": "5484cecd8a2ssdsd123121asas23445fffg587868",
       "created_at": "2023-03-15T01:49:45.985Z",
       "updated_at": "2023-03-15T01:54:17.345Z"
-    },
-    {
-      "fullName": "Hoa Thien Dieu",
-      "gender": "Female",
-      "birthday": "1998-07-20T17:00:00.000Z",
-      "email": "hoathiendieu@gmail.com",
-      "phoneNumber": "07123236789",
-      "address": "Bac Lieu",
-      "department": {
-        "label": "Purchasing",
-        "value": "purchasing"
-      },
-      "level": {
-        "label": "Level 1",
-        "value": "level 1"
-      },
-      "id": "5484ce1212e44311fed3bfdf587868",
-      "created_at": "2023-03-15T01:49:45.985Z",
-      "updated_at": "2023-03-15T01:54:47.848Z"
     }
   ]
 }
